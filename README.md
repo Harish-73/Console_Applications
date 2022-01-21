@@ -7,15 +7,28 @@
 
 ## Contents
 
+
 <br>
-
 <div align = "center">
-
-| <div align = "center">Name </div>                                                                                                        | <div align = "center">Description</div>     |
-| -----------------------------------------------------------------------------------------------------------------------------------------| ------------------------------------------- |
-| **[Automated Teller Machine](https://github.com/Harish-73/Console_Applications/blob/main/ATM/AutomatedTellerMachine.java)**              | ATM application built using Java          |
-| **[Railway Reservation](https://github.com/Harish-73/Console_Applications/blob/main/Railway%20Reservation/RailwayReservation.java)**     | Ticket booking application built using java |
-| **[Shopping application](https://github.com/Harish-73/Console_Applications/blob/main/Shopping%20Application/ShoppingApplication.java)**  | Shopping application built using Java     |
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td><b><a href="https://github.com/moulik237/Console-Applicatons/blob/main/ATM_Application.java">ATM Application</a><b></td>
+    <td>Console based ATM Application Built using java</td>
+  </tr>
+  <tr>
+    <td><b><a href="https://github.com/moulik237/Console-Applicatons/blob/main/Shopping_Application.java">Shoping Application</a><b></td>
+    <td>Shopping Application with real-time 
+        relevant cases Built using java</td>
+  </tr>
+  <tr>
+    <td><b><a href="https://github.com/moulik237/Console-Applicatons/blob/main/Railway_Application.java">Railway Application</a><b></td>
+    <td>Railway Reservation Application Built using java</td>
+  </tr>
+</table>
 
 </div>
 <br>
