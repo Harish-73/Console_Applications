@@ -1,7 +1,7 @@
 # Console_Applications
 <br>
 
-> ### _Simple console applications built using java._
+> ### _Simple console applications built using Java._
 
  <br>
 
@@ -13,9 +13,9 @@
 
 | <div align = "center">Name </div>                                                                                                        | <div align = "center">Description</div>     |
 | -----------------------------------------------------------------------------------------------------------------------------------------| ------------------------------------------- |
-| **[Automated Teller Machine](https://github.com/Harish-73/Console_Applications/blob/main/ATM/AutomatedTellerMachine.java)**              | ATM application built using python          |
+| **[Automated Teller Machine](https://github.com/Harish-73/Console_Applications/blob/main/ATM/AutomatedTellerMachine.java)**              | ATM application built using Java          |
 | **[Railway Reservation](https://github.com/Harish-73/Console_Applications/blob/main/Railway%20Reservation/RailwayReservation.java)**     | Ticket booking application built using java |
-| **[Shopping application](https://github.com/Harish-73/Console_Applications/blob/main/Shopping%20Application/ShoppingApplication.java)**  | Shopping application built using python     |
+| **[Shopping application](https://github.com/Harish-73/Console_Applications/blob/main/Shopping%20Application/ShoppingApplication.java)**  | Shopping application built using Java     |
 
 </div>
 <br>
