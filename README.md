@@ -20,6 +20,10 @@
     <td>Console based ATM Application Built using java</td>
   </tr>
   <tr>
+   <td><b><a href="https://github.com/Harish-73/Console_Applications/blob/main/Library%20Management%20System/LibraryManagementSystem.java">Railway Application</a><b></td>
+    <td>Library management System Built using java</td>    
+  </tr>
+  <tr>
    <td><b><a href="https://github.com/Harish-73/Console_Applications/blob/main/Railway%20Reservation/RailwayReservation.java">Railway Application</a><b></td>
     <td>Railway Reservation Application Built using java</td>    
   </tr>
