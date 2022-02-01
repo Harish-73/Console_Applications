@@ -29,9 +29,12 @@
   </tr>
   <tr>
    <td><b><a href="https://github.com/Harish-73/Console_Applications/blob/main/Shopping%20Application/ShoppingApplication.java">Shoping Application</a><b></td>
-    <td>Shopping Application with real-time 
-        relevant cases Built using java</td> 
-  </tr>  
+    <td>Shopping Application Built using java</td> 
+  </tr> 
+  <tr>
+   <td><b><a href="https://github.com/Harish-73/Console_Applications/blob/main/Vehicle%20Rental%20System/VehicleRentalSystem.java">Vehicle Rental System</a><b></td>
+    <td> Vehicle Rental System Built using java</td> 
+  </tr>    
 </table>
 
 </div>
