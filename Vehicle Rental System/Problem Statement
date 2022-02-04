@@ -1,0 +1,54 @@
+Vehicle Rental System
+
+Design and Develop a Monolith Console based Vehicle Rental system by understanding
+various use cases from the Admin and borrower point of view. You are allowed to
+improvise and add more real-time use relevant cases to to each task if possible.
+Vehicle rental system will display a catalogue of of available Cars and Bike and end-
+users can book a vehicle for a particular date.
+
+Module A : Sign and Signup
+Application must authenticate both Borrower and Administrator taking EmailID and
+password and display a welcome menu based on their role.
+
+Module B : Vehicle Inventroy
+Admin can Add a Vehicle (Car/Bike) ,Modify Vehicle Specifications such as Available
+Count and Delete a Vehicle.
+a) Admin can view list of all Vehicles sorted by Name or Available Number
+b) Admin can search a Vehicle by name or NumberPlate
+c) Admin can change the Security deposit amount for borrower
+
+Module C :Renting a Vehicle
+Renters can view a list of all Vehicles available, Select the Vehicle by Name or ID and
+checkout . Renter can borrow a maximum of one car and one bike at a time
+a) Add a Vehicle into checkout cart or remove them
+b) Can rent only one Car and Bike at a time
+c) Can rent a car/bike only if minimum security deposit of rupees 3000 is maintained for
+bike and 10000 for Car
+
+Module D : Fine and Regulations
+Each Borrower has deposited 30000 rupees Initially into the Rent Service as a Caution
+deposit. The amount will be refunded on returning the vehicle. The Amount will be
+reduced if there is any damage or loss of vehicle
+1. Vehicle rented must be returned same day
+2. Vehicle that run more than 500 kms a day will be charged additional 15% of total
+rental change
+3. Car damages are labels as LOW,MEDIUM,HIGH and based on that we will fine
+20% , 50% and 75% of total fine amount. Get this damage label from user
+4. Car must be serviced for every 3000KMS and bike must be services for every
+1500 .Unserviced vehicle must not be displayed in cataloge
+Fine amount can either by paid by cash or reduced in security deposit
+Regulations:
+a) Borrower can extend the tenure up to two times only consecutively for a Vehicle and
+it should be consecutive days
+b) Borrowers can either extend the tenure, exchange the car or mark a Vehicle as lost
+during every transaction
+
+Module E : Reports
+Admin can view below reports
+1. List of all vehicle that are due for Service
+2. List of all vehicle their details sorted by their Rental price,
+3. Vehicle can be searched by Name and can be filtered by Car or Bike filter
+4. List of Vehicles that are rented out or not been rented at all
+
+Reters can view:
+1. List of previous rentals
