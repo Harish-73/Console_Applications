@@ -1,636 +1,607 @@
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.ArrayList;
-import java.util.Locale;
-import java.util.Scanner;
+import java.util.*;
 
-class vDetails{
-    String vId;
-    String CoName;
-    String vehicleNo;
-    double km;
-    double totKm;
-    String service;
-    String vAvail;
+class user {
+    String userName,userPassword;
+    int userID,balance;
+    ArrayList<Borrow> his;
 
-    vDetails(String vId,String CoName,String vehicleNo,double km,double totKm,String service,String vAvail){
-        this.vId=vId;
-        this.CoName=CoName;
-        this.vehicleNo=vehicleNo;
-        this.km=km;
-        this.totKm=totKm;
-        this.service=service;
-        this.vAvail=vAvail;
+    user(String userName,String userPassword,int balance,int userID,ArrayList<Borrow> his){
+        this.userName=userName;
+        this.userPassword=userPassword;
+        this.balance=balance;
+        this.userID=userID;
+        this.his=his;
     }
 }
-class Vehicle{
-    String modelName;
-    ArrayList<vDetails> vDetail;
-    String vType;
+class vehicle {
+    String vehicleName,vehicleID,vehicleType;
+    int vehicleModel;
+    int vehicleRentPrice,vehicleTotalKM;
+    int vehicleTripKM,vehiclePrice;
 
-    Vehicle(String modelName,ArrayList<vDetails> vDetail,String vType){
-        this.modelName=modelName;
-        this.vDetail=vDetail;
-        this.vType=vType;
+
+    vehicle(String vehicleType,String vehicleID,String vehicleName,int vehicleModel,int vehicleRentPrice,int vehiclePrice,int vehicleTotalKM,int vehicleTripKM){
+        this.vehicleType=vehicleType;
+        this.vehicleID=vehicleID;
+        this.vehicleName=vehicleName;
+        this.vehicleModel=vehicleModel;
+        this.vehicleRentPrice=vehicleRentPrice;
+        this.vehiclePrice=vehiclePrice;
+        this.vehicleTotalKM=vehicleTotalKM;
+        this.vehicleTripKM=vehicleTripKM;
     }
 }
-class Borrow{
-    String modelName;
-    String vehicleNo;
-    String vNo;
-    String vType;
-    String uID;
-    LocalDate boDate;
+class Borrow {
+    String vehicleType,vehicleName,userName,vehicleID;
+    int userID,vehicleRentPrice;
+    LocalDate borrowDate,returnDate;
 
-
-    Borrow(String modelName,String vehicleNo,String vNo,String vType,String uID,LocalDate boDate){
-        this.modelName=modelName;
-        this.vehicleNo=vehicleNo;
-        this.vNo=vNo;
-        this.vType=vType;
-        this.uID=uID;
-        this.boDate=boDate;
-    }
-}
-class User {
-    String uName;
-    String uPassword;
-    double uWallet;
-    String uID;
-    ArrayList<Borrow> borrowH;
-
-    User(String uName, String uPassword, double uWallet, String uID, ArrayList<Borrow> borrowH) {
-        this.uName = uName;
-        this.uPassword = uPassword;
-        this.uWallet = uWallet;
-        this.uID = uID;
-        this.borrowH = borrowH;
-    }
-}
-class BorrowHistory{
-    Borrow borrowH;
-    double km;
-    double bill;
-    LocalDate reDate;
-
-    BorrowHistory(Borrow borrowH, double km, double bill, LocalDate reDate){
-        this.borrowH=borrowH;
-        this.km=km;
-        this.bill=bill;
-        this.reDate=reDate;
+    Borrow(int userID,String userName,String vehicleType,String vehicleID,String vehicleName,int vehicleRentPrice,LocalDate borrowDate,LocalDate returnDate){
+        this.userName=userName;
+        this.userID=userID;
+        this.vehicleType=vehicleType;
+        this.vehicleID=vehicleID;
+        this.vehicleName=vehicleName;
+        this.vehicleRentPrice=vehicleRentPrice;
+        this.borrowDate=borrowDate;
+        this.returnDate=returnDate;
     }
 }
 
 public class VehicleRentalSystem {
     static Scanner sc = new Scanner(System.in);
-    static ArrayList<Vehicle> vehiclesList = new ArrayList<>();
+    static ArrayList<user> userList = new ArrayList<>();
+    static ArrayList<vehicle> vehicleList = new ArrayList<>();
     static ArrayList<Borrow> borrowList = new ArrayList<>();
-    static ArrayList<User> userList = new ArrayList<>();
-    static ArrayList<BorrowHistory> borrowHistories = new ArrayList<>();
+    static String adminEmail = "a";
+    static int adminPassword = 1;
+    static int historyI = 0;
+    static int userTaken = 0;
+    static int userI = 0;
 
-    private static void ViewVehicle() {
-        System.out.printf(" %-15s|| %-6s|| %-10s|| %-6s|| %-6s|| %-6s|| %-8s||\n", "Model Name", "Vno", "Company", "TNno", "Km", "ser", "Avail");
-        for (Vehicle vehicle : vehiclesList) {
-            for (int i = 0; i < vehicle.vDetail.size(); i++) {
-                System.out.printf(" %-15s|| %-6s|| %-10s|| %-6s|| %-6s|| %-6s|| %-8s||\n", vehicle.modelName, vehicle.vDetail.get(i).vId, vehicle.vDetail.get(i).CoName, vehicle.vDetail.get(i).vehicleNo,vehicle.vDetail.get(i).km,vehicle.vDetail.get(i).service,vehicle.vDetail.get(i).vAvail);
-            }
+    static int amount(int b) {
+        while (b < 30000) {
+            System.out.println("Your Initial Balance Must be Equal to or Greater Than 30000.\nPlease Make your Initial Payment According to it.");
+            b = sc.nextInt();
         }
+        return b;
     }
-    private static void SearchVehicle() {
-        System.out.print("Enter Model Name : ");
-        sc.nextLine();
-        String ve = sc.nextLine();
-        boolean flag = true;
-        for (Vehicle vehicle : vehiclesList) {
-            if (vehicle.modelName.equals(ve)){
-                for(int i =0;i<vehicle.vDetail.size();i++){
-                    System.out.print("Enter Vehicle ID : ");
-                    String veh = sc.nextLine();
-                    if(vehicle.vDetail.get(i).vId.equals(veh)) {
-                        System.out.printf(" %-15s|| %-6s|| %-10s|| %-6s|| %-6s|| %-6s|| %-8s||\n", "Model Name", "Vno", "Company", "TNno", "Km", "ser", "Avail");
-                        System.out.printf(" %-15s|| %-6s|| %-10s|| %-6s|| %-6s|| %-6s|| %-8s||\n", vehicle.modelName, vehicle.vDetail.get(i).vId, vehicle.vDetail.get(i).CoName, vehicle.vDetail.get(i).vehicleNo,vehicle.vDetail.get(i).km,vehicle.vDetail.get(i).service,vehicle.vDetail.get(i).vAvail);
-                        flag = false;
-                        break;
-                    }
-                }
-                break;
-            }
-        }
-        if(flag) System.out.println("Enter correct Model Name");
-    }
-    private static void BorrowersDetails() {
-        if(borrowList.size()==0) System.out.println("No vehicles Borrowed!");
-        else {
-            int i = 0;
-            System.out.printf(" %-15s|| %-15s|| %-15s|| %-15s|| %-18s|| %-15s||\n", "Vehicle Mode", "User ID", "Vehicle ID", "Model Name", "Vehicle Number", "Borrow Date");
-            while (i < borrowList.size()) {
-                System.out.printf(" %-15s|| %-15s|| %-15s|| %-15s|| %-18s|| %-15s||\n", borrowList.get(i).vType, borrowList.get(i).uID, borrowList.get(i).vNo, borrowList.get(i).modelName, borrowList.get(i).vehicleNo, borrowList.get(i).boDate);
-                i++;
-                System.out.println();
-            }
-        }
-    }
-    private static void userDetails() {
-        System.out.println("Enter User ID : ");
-        sc.nextLine();
-        String uId = sc.nextLine();
-        for (User user : userList) {
-            if (user.uID.equals(uId)) {
-                System.out.println("User ID : "+user.uID+
-                        "\nUser Name : "+user.uName+
-                        "\nUser wallet : Rs."+user.uWallet);
-                break;
-            }
-        }
-    }
-    private static void serviceVehicle() {
-        int k=0;
-        for (Vehicle vehicle : vehiclesList) {
-            int j=0;
-            while(j<vehicle.vDetail.size()) {
-                if (vehicle.vDetail.get(j).km >= 3000) {
-                    System.out.printf(" %-15s|| %-6s|| %-10s|| %-6s|| %-6s|| %-8s|| %-6s|| %-8s||\n", "Model Name", "Vno", "Company", "TNno", "Km", "totKm", "ser", "Avail");
-                    for (int i = 0; i < vehicle.vDetail.size(); i++) {
-                        System.out.printf(" %-15s|| %-6s|| %-10s|| %-6s|| %-6s|| %-8s|| %-6s|| %-8s||\n", vehicle.modelName, vehicle.vDetail.get(i).vId, vehicle.vDetail.get(i).CoName, vehicle.vDetail.get(i).vehicleNo, vehicle.vDetail.get(i).km, vehicle.vDetail.get(i).totKm, vehicle.vDetail.get(i).service, vehicle.vDetail.get(i).vAvail);
-                        System.out.print("Enter 'ok' to Service : ");
-                        k++;
-                        String s = sc.nextLine();
-                        if(s.equals("ok")){
-                            vehicle.vDetail.get(i).km=0;
-                            System.out.println("Serviced Successfully!");
-                            System.out.println("-------");
-                        }
-                    }
-                }
-                j++;
-            }
-        }
-        if(k>0) {
-            System.out.println("Enter Model Name :");
-            sc.nextLine();
-            String mName = sc.nextLine();
-            System.out.println("Enter Vehicle to service : ");
-            sc.nextLine();
-            String vId = sc.nextLine();
-            for (Vehicle vehicle : vehiclesList) {
-                int j = 0;
-                if (vehicle.modelName.equals(mName)) {
-                    while (j < vehicle.vDetail.size()) {
-                        if (vehicle.vDetail.get(j).vId.equals(vId)) {
-                            vehicle.vDetail.get(j).km = 0;
-                        }
-                        j++;
-                    }
-                    break;
-                }
-            }
-            System.out.println(mName + " Serviced Successfully!");
-        }else System.out.println("No vehicle to Service!");
-    }
-    private static void addUser() {
+
+    private static void newUser() {
         System.out.println("Enter User Name : ");
         sc.nextLine();
         String uName = sc.nextLine();
-        boolean flag = checkExistingInUser(uName);
-        if (flag) {
-            System.out.println("Enter User Password : ");
-            sc.nextLine();
-            String usPassword = sc.nextLine();
-            double usWallet;
-            do {
-                System.out.println("Security deposit amount should be above 3000.0 Rs");
-                System.out.println("Enter Deposit Amount : ");
-                usWallet = sc.nextDouble();
-            } while (usWallet < 2999);
-            ArrayList<Borrow> ub = new ArrayList<>();
-            userList.add(new User(uName, usPassword, usWallet, "UID" + (userList.size() + 1),ub));
-            System.out.println("Account Created Successfully!");
-        } else System.out.println("User Name Already Exist!");
+        System.out.println("Enter Your Password : ");
+        String uPassword = sc.nextLine();
+        System.out.println("Enter your Balance : ");
+        int bal = sc.nextInt();
+        int ba = amount(bal);
+        int id = userList.size() + 1;
+        ArrayList<Borrow> his = new ArrayList<>();
+        user u = new user(uName, uPassword, ba, id, his);
+        userList.add(u);
+        System.out.println("New User Added Successfully");
+        System.out.println("Your User Id is " + id + " Please Remember for Login");
+        System.out.println();
     }
-    private static void addVehicle() {
-        System.out.print("Enter Vehicle Model Name : ");
-        String modelName= sc.nextLine();
-        for(Vehicle vehicle:vehiclesList){
-            if(vehicle.modelName.equals(modelName)){
-                int n = totNofVehicle();
-                System.out.print("Enter Company Name : ");
-                String cName = sc.nextLine();
-                System.out.print("Enter Vehicle No : ");
-                String vNo = sc.nextLine();
-                vehicle.vDetail.add(new vDetails("VN" + n, cName, vNo, 0, 0, "Yes", "Yes"));
-                System.out.println("Vehicle Added Successfully");
-            }
-        }
-    }
-    private static void addNewVehicle() {
-        ArrayList<vDetails> ve = new ArrayList<>();
-        System.out.print("Enter Vehicle Model Name : ");
-        String modelName= sc.nextLine();
-        System.out.print("Enter Vehicle Type : ");
-        String vType = sc.nextLine();
-        System.out.print("Enter No of Vehicles : ");
-        int k = sc.nextInt();
-        int i=0;
-        while(i<k) {
-            int n = totNofVehicle();
-            System.out.print("Enter Company Name : ");
-            String cName = sc.nextLine();
-            System.out.print("Enter Vehicle No : ");
-            String vNo = sc.nextLine();
-            ve.add(new vDetails("VN" + n, cName, vNo, 0, 0, "Yes", "Yes"));
-            i++;
-        }
-        vehiclesList.add(new Vehicle(modelName, ve, vType));
-    }
-    private static void borrowHistory() {
-        if(borrowHistories.size()==0) System.out.println("No vehicles Borrowed!");
-        else {
-            int i = 0;
-            System.out.printf(" %-15s|| %-12s|| %-14s|| %-15s|| %-10s|| %-15s|| %-15s|| %-5s|| %-6s|| \n",
-                    "Vehicle Type", "Vehicle ID", "Model Name", "Vehicle Number", "User ID", "Borrow Date", "Return Date", "Km", "Bill");
-            while (i < borrowHistories.size()) {
-                System.out.printf(" %-15s|| %-12s|| %-14s|| %-15s|| %-10s|| %-15s|| %-15s|| %-5s|| %-6s|| \n",
-                        borrowHistories.get(i).borrowH.vType, borrowHistories.get(i).borrowH.vNo,
-                        borrowHistories.get(i).borrowH.modelName, borrowHistories.get(i).borrowH.vehicleNo,
-                        borrowHistories.get(i).borrowH.uID, borrowHistories.get(i).borrowH.boDate,
-                        borrowHistories.get(i).reDate, borrowHistories.get(i).km, borrowHistories.get(i).bill);
-                i++;
-                System.out.println();
-            }
-        }
-    }
-
-
-    private static void userSigning() {
-        System.out.println("Enter User Name : ");
+    static void addVehicle() {
+        System.out.println("1.Car \t 2.Bike \nEnter Vehicle Type : ");
+        int t = sc.nextInt();
+        String id = "", type = "";
+        if (t == 1) {
+            id += "C";
+            type = "Car";
+        } else if (t == 2) {
+            id += "B";
+            type = "Bile";
+        } else System.out.println("Invalid Number");
+        System.out.println("Enter " + type + " Name : ");
         sc.nextLine();
-        String uName = sc.nextLine();
-        System.out.println("Enter User Password : ");
-        String usPassword = sc.nextLine();
-        boolean flag = true;
-        for (User user : userList) {
-            if (user.uName.equals(uName) && user.uPassword.equals(usPassword)) {
-                UserFunction(user);
-                flag = false;
-                break;
-            }
-        }
-        if (flag) {
-            System.out.println("Enter correct User Name and Password!,Retry!!");
-        }
-    }
-    private static void userView(){
-        System.out.println("1.car");
-        System.out.println("2.bike");
-        System.out.println("3.Both");
-        System.out.print("Enter your choice : ");
-        String d = sc.next();
-        boolean flag = true;
-        for (Vehicle vehicle : vehiclesList) {
-            if(vehicle.vType.equals(d)) {
-                for (int i = 0; i < vehicle.vDetail.size(); i++) {
-                    if (vehicle.vDetail.get(i).vAvail.equals("Yes")) {
-                        System.out.println(++i + "." + vehicle.modelName+" "+vehicle.vType);
-                        flag=false;
-                        break;
-                    }
-                }
-            }
-        }
-        if(flag){
-            for (Vehicle vehicle : vehiclesList) {
-                for (int i = 0; i < vehicle.vDetail.size(); i++) {
-                    if (vehicle.vDetail.get(i).vAvail.equals("Yes")) {
-                        System.out.println(++i + "." + vehicle.modelName+"  "+vehicle.vType);
-                        break;
-                    }
-                }
-            }
-        }
-    }
-    private static void borrowVehicle(User user) {
-        System.out.print("Enter the number of bookings : ");
-        int boNo = sc.nextInt();
-        int k = len(user);
-        if (k+boNo>2) {
-            System.out.println("User Vehicle borrow limit is 2 ");
-        } else{
-            availVehicle();
-            System.out.println("Enter Madel name : ");
-            sc.nextLine();
-            String mName=sc.nextLine();
-            boolean flag = value(user,mName);
-            if(flag) {
-                for (Vehicle vehicle : vehiclesList) {
-                    if (vehicle.modelName.equals(mName)) {
-                        String vn = selectable(vehicle);
-                        String vNo = getvNo(vehicle, vn);
-                        System.out.print("Enter OK to Borrow '" + vehicle.modelName + "' " + vehicle.vType + " ");
-                        String d = sc.next().toUpperCase(Locale.ROOT).trim();
-                        if (d.equals("OK")) {
-                            LocalDate boDate = LocalDate.now();
-                            borrowList.add(new Borrow(mName, vNo, vn, vehicle.vType, user.uID, boDate));
-                            user.borrowH.add(new Borrow(mName, vNo, vn, vehicle.vType, user.uID, boDate));
-                            for (int i = 0; i < vehicle.vDetail.size(); i++) {
-                                if (vehicle.vDetail.get(i).vId.equals(vn)) {
-                                    vehicle.vDetail.get(i).vAvail = "No";
-                                    break;
-                                }
-                            }
-                            System.out.println(vehicle.modelName + " Booked successfully!");
-                            veBorrDetails(user);
-                        }
-                    }
-                }
-            }else{
-                System.out.println("Your wallet Balance is Too low!");
-            }
-        }
-    }
-    private static void uBorrowHistory(User user){
-        if(user.borrowH.size()==0){
-            System.out.println("No vehicle borrowed");
-        }else {
-            int i = user.borrowH.size()-1;
-            System.out.printf(" %-15s|| %-15s|| %-18s|| %-15s||\n", "Vehicle Mode", "Model Name", "Vehicle Number", "Borrow Date");
-
-            while (i >=0) {
-                System.out.printf(" %-15s|| %-15s|| %-18s|| %-15s||\n", user.borrowH.get(i).vType, user.borrowH.get(i).modelName, user.borrowH.get(i).vehicleNo, user.borrowH.get(i).boDate);
-                i--;
-                System.out.println();
-            }
-        }
-    }
-    private static void Return(User user) {
-        System.out.println("Enter Model name : ");
-        sc.nextLine();
-        String mName = sc.nextLine();
-        System.out.print("Enter vehicle No : ");
-        String vNo = sc.nextLine();
-        int km=0;
-        for (Borrow vehicle : borrowList) {
-            if (vehicle.modelName.equals(mName) && vehicle.uID.equals(user.uID)){// && vehicle.vehicleNo.equals(vNo)) {
-                System.out.println("Enter km Travelled : ");
-                km = sc.nextInt();
-                double bill = km * 10;
-                Period diff;
-                LocalDate reDate = LocalDate.now();
-                diff = Period.between(vehicle.boDate, reDate);
-                if(diff.getDays()>1) {
-                    int n = diff.getDays();
-                    int b=n*50;
-                    bill+=b;
-                }
-                borrowHistories.add(new BorrowHistory(vehicle, km, bill, reDate));
-                user.uWallet-=bill;
-                System.out.println("Your Bill Rs."+bill);
-                System.out.println("Returned Successfully!");
-                borrowList.remove(vehicle);
-                break;
-            }
-        }
-        for (Vehicle ve : vehiclesList) {
-            if (ve.modelName.equals(mName)) {
-                for (int j = 0; j < ve.vDetail.size(); j++) {
-                    if (ve.vDetail.get(j).vehicleNo.equals(vNo)) {
-                        ve.vDetail.get(j).vAvail = "Yes";
-                        ve.vDetail.get(j).totKm+=km;
-                        break;
-                    }
-                }
-                break;
-            }
-        }
-    }
-    private static void walletBalance(User user) {
-        System.out.println("Your wallet Balance : Rs"+user.uWallet);
+        String n = sc.nextLine();
+        System.out.println("Enter " + type + " Model : ");
+        int pno = sc.nextInt();
+        System.out.println("Enter " + type + " Price : ");
+        int tp = sc.nextInt();
+        System.out.println("Enter " + type + "'s Rent Price(1 km) : ");
+        int rp = sc.nextInt();
+        System.out.println("Enter " + type + "'s Total Kilometer : ");
+        int tkm = sc.nextInt();
+        System.out.println("Enter " + type + "'s Trip Kilometer : ");
+        int km = sc.nextInt();
+        vehicle b = new vehicle(type, (id + (vehicleList.size()+1)), n, pno, rp, tp, tkm, km);
+        vehicleList.add(b);
+        System.out.println("New "+type+" Added Successfully");
+        System.out.println();
     }
 
-
-    private static String getvNo(Vehicle vehicle,String vn) {
-        String s="";
-        for(int i=0;i<vehicle.vDetail.size();i++){
-            if(vehicle.vDetail.get(i).vId.equals(vn)){
-                s=vehicle.vDetail.get(i).vehicleNo;
-                break;
-            }
-        }
-        return s;
-    }
-    private static void veBorrDetails(User user) {
-        System.out.println("Vehicle Mode : "+user.borrowH.get(borrowList.size()-1).vType+
-                "\nModel Name : "+user.borrowH.get(borrowList.size()-1).modelName+
-                "\nVehicle Number : "+user.borrowH.get(borrowList.size()-1).vehicleNo+
-                "\nBorrow Date : "+user.borrowH.get(borrowList.size()-1).boDate);
-    }
-    private static String selectable(Vehicle vehicle) {
-        double min = vehicle.vDetail.get(0).km;
-        String vn = vehicle.vDetail.get(0).vId;
-        for(int i=1;i<vehicle.vDetail.size();i++){
-            if(vehicle.vDetail.get(i).vAvail.equals("Yes")) {
-                if(vehicle.vDetail.get(i).km<=min && vehicle.vDetail.get(i).km<=3000){
-                    min = vehicle.vDetail.get(i).km;
-                    vn = vehicle.vDetail.get(i).vId;
-                }
-            }
-        }
-        return vn;
-    }
-    private static boolean checkExistingInUser(String uName) {
-        for (User user : userList) {
-            if (user.uName.equals(uName)) return false;
-        }
-        return true;
-    }
-    private static int totNofVehicle() {
-        int count=0;
-        for (Vehicle vehicle : vehiclesList) {
-            count += vehicle.vDetail.size();
-        }
-        return count;
-    }
-    private static int len(User user){
-        int c=0;
-        for (Borrow borrow : borrowList) {
-            if (borrow.uID.equals(user.uID)) {
+    static void removeVehicle() {
+        int c = 0;
+        System.out.println("1.Car \t 2.Bike \nEnter Vehicle Type : ");
+        int t = sc.nextInt();
+        String type = "";
+        if (t == 1) type = "Car";
+        else if (t == 2) type = "Bile";
+        System.out.println("Enter " + type + " ID : ");
+        String pno = sc.nextLine();
+        for (int i = 0; i < vehicleList.size(); i++) {
+            if (vehicleList.get(i).vehicleID.equals(pno)) {
+                vehicleList.remove(i);
                 c++;
             }
         }
-        return c;
-    }
-    private static void availVehicle() {
-        int i=1;
-        for (Vehicle vehicle : vehiclesList) {
-            for (int j = 0; j < vehicle.vDetail.size(); j++) {
-                if (vehicle.vDetail.get(i).vAvail.equals("Yes")) {
-                    System.out.println(i +"."+vehicle.modelName);
-                    i++;
-                    break;
-                }
-            }
-        }
-    }
-    private static boolean value(User user,String mName){
-        for(Vehicle ve : vehiclesList){
-            if(ve.modelName.equals(mName)){
-                if(ve.vType.equals("car")){
-                    if(user.uWallet>=10000) return true;
-                }
-                else if(ve.vType.equals("bike")){
-                    if(user.uWallet>=3000) return true;
-                }
-            }
-        }
-        return false;
-    }
-    private static void UserFunction(User user) {
-        int ch;
-        do {
-            System.out.println("----------- Welcome " + user.uName + " to Library -----------");
-            System.out.println("1.View Vehicle");
-            System.out.println("2.Borrow Vehicle");
-            System.out.println("3.Borrow History");
-            System.out.println("4.Return");
-            System.out.println("5.Wallet");
-            System.out.println("6.Exit");
-            System.out.println("Enter your choice :");
-            ch = sc.nextInt();
-            switch (ch) {
-                case 1:
-                    userView();
-                    break;
-                case 2:
-                    borrowVehicle(user);
-                    break;
-                case 3:
-                    uBorrowHistory(user);
-                    break;
-                case 4:
-                    Return(user);
-                    break;
-                case 5:
-                    walletBalance(user);
-                    break;
-                case 6:
-                    break;
-                default:
-                    System.out.println("Invalid Input!,Retry!!");
-                    break;
-            }
-        } while (ch != 6);
+        if (c == 0) System.out.println("The " + type + " does not Exists!!!\nEnter " + type + " & ID Correctly!!!");
+        else System.out.println(type + " Removed Successfully");
+        System.out.println();
     }
 
+    static void mod_tit(int i) {
+        System.out.print("Enter New Vehicle Name :");
+        String vehicle_tit = sc.next();
+        vehicleList.get(i).vehicleName = vehicle_tit;
+        System.out.println("Vehicle Name Changed Successfully....");
+        System.out.println();
+    }
 
-    private static void admin() {
-        System.out.println("----- You Have Chosen ADMIN Login -----");
-        System.out.println("Enter Admin Name : ");
-        sc.nextLine();String aName = sc.nextLine();
-        System.out.println("Enter Admin Password : ");
-        String aPassword = sc.nextLine();
-        if(aName.equals("admin")&&aPassword.equals("12345")) {
-            int adCh = 0;
-            do {
-                System.out.println("1.View Vehicle");
-                System.out.println("2.Search Vehicle");
-                System.out.println("3.Borrower Details");
-                System.out.println("4.User Details");
-                System.out.println("5.Service vehicle");
-                System.out.println("6.Add User");
-                System.out.println("7.Add vehicle");
-                System.out.println("8.Add New Model");
-                System.out.println("9.Borrow History");
-                System.out.println("10.Exit");
-                System.out.println("Enter Your Choice");
-                adCh=sc.nextInt();
-                switch (adCh) {
+    static void mod_auth(int i) {
+        System.out.print("Enter New Model :");
+        int vehicle_auth = sc.nextInt();
+        vehicleList.get(i).vehicleModel = vehicle_auth;
+        System.out.println("Vehicle Model Changed Successfully....");
+        System.out.println();
+    }
+
+    static void mod_type(int i) {
+        System.out.print("Enter New Rent Price :");
+        int vehicle_type = sc.nextInt();
+        vehicleList.get(i).vehicleRentPrice = vehicle_type;
+        System.out.println("vehicle Type Changed Successfully....");
+        System.out.println();
+    }
+
+    static void mod_isbn(int i) {
+        System.out.print("Enter New ID number :");
+        String vehicle_isbn = sc.nextLine();
+        vehicleList.get(i).vehicleID = vehicle_isbn;
+        System.out.println("vehicle ISBN Changed Successfully....");
+        System.out.println();
+    }
+
+    static void mod_price(int i) {
+        System.out.print("Enter New vehicle Price :");
+        int vehicle_price = sc.nextInt();
+        vehicleList.get(i).vehiclePrice = vehicle_price;
+        System.out.println("vehicle Title Changed Successfully....");
+        System.out.println();
+    }
+
+    static void mod_count(int i) {
+        System.out.print("Enter New Kilometer :");
+        int vehicle_count = sc.nextInt();
+        vehicleList.get(i).vehicleTotalKM = vehicle_count;
+        System.out.println("vehicle Title Changed Successfully....");
+        System.out.println();
+    }
+
+    static void modifyVehicle() {
+        System.out.print("Enter the Vehicle ID to modify : ");
+        int mod_count = 0;
+        String temp_isbn = sc.nextLine();
+        for (int i = 0; i < vehicleList.size(); i++) {
+            if (vehicleList.get(i).vehicleID.equals(temp_isbn)) {
+                mod_count++;
+                int n6 = 0;
+                do {
+                    System.out.println("1.Modify Vehicle Name");
+                    System.out.println("2.Modify Vehicle Model");
+                    System.out.println("3.Modify Vehicle Rent Price");
+                    System.out.println("4.Modify Vehicle ID");
+                    System.out.println("5.Modify Vehicle Price");
+                    System.out.println("6.Modify Vehicle Total Kilometer");
+                    System.out.println("0.Exit");
+                    n6 = sc.nextInt();
+                    switch (n6) {
+                        case 0:
+                            System.out.println("All Changer Modified Successfully!");
+                            break;
+                        case 1:
+                            mod_tit(i);
+                            break;
+                        case 2:
+                            mod_auth(i);
+                            break;
+                        case 3:
+                            mod_type(i);
+                            break;
+                        case 4:
+                            mod_isbn(i);
+                            break;
+                        case 5:
+                            mod_price(i);
+                            break;
+                        case 6:
+                            mod_count(i);
+                            break;
+                        default:
+                            System.out.println("Invalid Number");
+                            break;
+                    }
+                } while (n6 != 0);
+            }
+        }
+        if (mod_count == 0) {
+            System.out.println("Incorrect ISBN or vehicle not Found....");
+        }
+    }
+
+    static void viewVehicles() {
+        System.out.println("-----Vehicle List-----");
+        if (vehicleList.size() > 0) {
+            System.out.println(String.format("%-4s %-18s %-18s %-18s %-18s %-22s %-20s %-26s %-26s", "SNo", "Vehicle ID", "Vehicle Type", "Vehicle Name", "Vehicle Model", "vehicle Price", "Vehicle Rent Price", "Vehicle Total Kilometer", "Vehicle Trip Kilometer"));
+            for (int i = 0; i < vehicleList.size(); i++) {
+                int n = i;
+                if (vehicleList.get(i).vehicleType.equals("Car") && vehicleList.get(i).vehicleTripKM < 3000) {
+                    System.out.println(String.format("%-4s %-18s %-18s %-18s %-18s %-22s %-20s %-26s %-26s", (n + 1), vehicleList.get(i).vehicleID, vehicleList.get(i).vehicleType, vehicleList.get(i).vehicleName, vehicleList.get(i).vehicleModel, vehicleList.get(i).vehiclePrice, vehicleList.get(i).vehicleRentPrice, vehicleList.get(i).vehicleTotalKM, vehicleList.get(i).vehicleTripKM));
+                } else if (vehicleList.get(i).vehicleType.equals("Bike") && vehicleList.get(i).vehicleTripKM < 1500) {
+                    System.out.println(String.format("%-4s %-18s %-18s %-18s %-18s %-22s %-20s %-26s %-26s", (n + 1), vehicleList.get(i).vehicleID, vehicleList.get(i).vehicleType, vehicleList.get(i).vehicleName, vehicleList.get(i).vehicleModel, vehicleList.get(i).vehiclePrice, vehicleList.get(i).vehicleRentPrice, vehicleList.get(i).vehicleTotalKM, vehicleList.get(i).vehicleTripKM));
+                } else n--;
+            }
+        } else System.out.println("No vehicles Available!");
+        System.out.println();
+    }
+
+    static void viewUsers() {
+        System.out.println("-----User List-----");
+        if (userList.size() > 0) {
+            System.out.println(String.format("%-4s %-8s %-25s %-12s", "SNo", "User_ID", "User_Name", "Balance_Amount"));
+            for (int i = 0; i < userList.size(); i++) {
+                System.out.println(String.format("%-4s %-8s %-25s %-12s", (i + 1), userList.get(i).userID, userList.get(i).userName, userList.get(i).balance));
+            }
+        } else System.out.println("No vehicles Available!");
+        System.out.println();
+    }
+
+    static void userSearchVehicle() {
+        int c = 0;
+        System.out.println("Enter Vehicle Name : ");
+        sc.nextLine();
+        String uName = sc.nextLine();
+        for (int i = 0; i < vehicleList.size(); i++) {
+            if (vehicleList.get(i).vehicleName.equals(uName)) {
+                c++;
+                System.out.println(String.format("%-4s %-18s %-18s %-18s %-18s %-22s %-18s %-26s %-26s", "SNo", "Vehicle ID", "Vehicle Type", "Vehicle Name", "Vehicle Model", "vehicle Price", "Vehicle Rent Price", "Vehicle Total Kilometer", "Vehicle Trip Kilometer"));
+                System.out.println(String.format("%-4s %-18s %-18s %-18s %-18s %-22s %-18s %-26s %-26s", (i + 1), vehicleList.get(i).vehicleID, vehicleList.get(i).vehicleType, vehicleList.get(i).vehicleName, vehicleList.get(i).vehicleModel, vehicleList.get(i).vehiclePrice, vehicleList.get(i).vehicleRentPrice, vehicleList.get(i).vehicleTotalKM, vehicleList.get(i).vehicleTripKM));
+            }
+        }
+        if (c == 0) System.out.println("No Vehicle Found! or Vehicle is Under Service!");
+        else System.out.println("These are the Results!");
+        System.out.println();
+    }
+
+    static void adminSearchVehicle() {
+        int c = 0;
+        System.out.println("1.Car \t 2.Bike \nEnter Vehicle Type : ");
+        int t = sc.nextInt();
+        String type = "";
+        if (t == 1) type = "Car";
+        else if (t == 2) type = "Bile";
+        System.out.println("Enter Vehicle ID  : ");
+        sc.nextLine();
+        String n = sc.nextLine();
+        for (int i = 0; i < vehicleList.size(); i++) {
+            if (vehicleList.get(i).vehicleID.equals(n)) {
+                c++;
+                System.out.println(String.format("%-4s %-18s %-18s %-18s %-18s %-22s %-18s %-26s %-26s", "SNo", "Vehicle ID", "Vehicle Type", "Vehicle Name", "Vehicle Model", "vehicle Price", "Vehicle Rent Price", "Vehicle Total Kilometer", "Vehicle Trip Kilometer"));
+                if (t == 1 && vehicleList.get(i).vehicleTripKM < 3000) {
+                    System.out.println(String.format("%-4s %-18s %-18s %-18s %-18s %-22s %-18s %-26s %-26s", (i + 1), vehicleList.get(i).vehicleID, vehicleList.get(i).vehicleType, vehicleList.get(i).vehicleName, vehicleList.get(i).vehicleModel, vehicleList.get(i).vehiclePrice, vehicleList.get(i).vehicleRentPrice, vehicleList.get(i).vehicleTotalKM, vehicleList.get(i).vehicleTripKM));
+                } else if (t == 2 && vehicleList.get(i).vehicleTripKM < 1500) {
+                    System.out.println(String.format("%-4s %-18s %-18s %-18s %-18s %-22s %-18s %-26s %-26s", (i + 1), vehicleList.get(i).vehicleID, vehicleList.get(i).vehicleType, vehicleList.get(i).vehicleName, vehicleList.get(i).vehicleModel, vehicleList.get(i).vehiclePrice, vehicleList.get(i).vehicleRentPrice, vehicleList.get(i).vehicleTotalKM, vehicleList.get(i).vehicleTripKM));
+                }
+            }
+            if (c == 0) System.out.println("Invalid ID or Vehicle is Under Service!!!");
+            else System.out.println("These are the Results!");
+            System.out.println();
+        }
+    }
+
+    static void borrowVehicle() {
+        viewVehicles();
+        int c = 0;
+        if (userTaken <= 2) {
+            if (userList.get(userI).balance > 10000) {
+                if(userList.get(userI).balance > 3000) {
+                    System.out.print("Enter the Vehicle ID to place your order :");
+                    sc.nextLine();
+                    String n = sc.nextLine();
+                    boolean flag = true;
+                    for (int i = 0; i < vehicleList.size(); i++) {
+                        if (flag) {
+                            if (vehicleList.get(i).vehicleID.equals(n)) {
+                                System.out.println("Enter Date of Booking(yyyy-mm-dd) : ");
+                                LocalDate b = LocalDate.parse(sc.nextLine());
+                                LocalDate r = b;
+                                Borrow a = new Borrow(userList.get(userI).userID, userList.get(userI).userName, vehicleList.get(i).vehicleType, vehicleList.get(i).vehicleID, vehicleList.get(i).vehicleName, vehicleList.get(i).vehicleRentPrice, b, r);
+                                borrowList.add(a);
+                                c++;
+                                userList.get(userI).his.add((borrowList.get(borrowList.size() - 1)));
+                                userTaken++;
+                                System.out.println("Vehicle Booked successfully!!!\nAccording to the Kilometers you will be Charged...\nNow the Kilometers runned by the Vehicle is " + vehicleList.get(i).vehicleTotalKM);
+                            }
+                        }
+                    }
+                    if (c == 0) System.out.println("Vehicles not available...");
+                }else System.out.println("Your Available Deposit is too low.....");
+            } else System.out.println("Your Available Deposit is too low to Borrow a Car.....\n You can Borrow a Bike...!");
+        } else System.out.println("You only can Book 2 Vehicles at a time!!!");
+        System.out.println();
+    }
+
+    static void vehicleReturn() {
+        System.out.println("Enter 1 if Vehicle is Damaged : ");
+        int damaged=sc.nextInt();
+        if(damaged!=1) {
+            System.out.print("Enter the Vehicle ID:");
+            sc.nextLine();
+            String temp_isbn = sc.nextLine();
+            for (int i = 0; i < borrowList.size(); i++) {
+                if (userList.get(userI).userID == borrowList.get(i).userID && borrowList.get(i).vehicleID.equals(temp_isbn)) {
+                    LocalDate day = LocalDate.now();
+                    Period days = Period.between(userList.get(userI).his.get(historyI).borrowDate, day);
+                    System.out.println("Enter the Kilometers : ");
+                    int tripKM = sc.nextInt();
+                    if (userList.get(userI).his.get(historyI).borrowDate == day) {
+                        double cost = costfunction(tripKM);
+                        System.out.println("Your total trip cost is : " + cost + "0");
+                        finePayment(cost);
+                        borrowList.remove(i);
+                        System.out.println("vehicle Returned Successfully....:)");
+                        vehicleList.get(i).vehicleTripKM+=tripKM;
+                    } else {
+                        double cost = costfunction(tripKM) + (1000 * days.getDays());
+                        System.out.println("Your total trip cost is : " + cost + "0");
+                        finePayment(cost);
+                        System.out.println("vehicle Returned Successfully....:)");
+                        vehicleList.get(i).vehicleTripKM+=tripKM;
+                        borrowList.remove(i);
+                    }
+                } else {
+                    System.out.println("Entered ID is not in your Borrowed History please Try again..");
+                }
+            }
+            System.out.println();
+        }else{
+            vehicleDamage();
+        }
+    }
+    static double costfunction(int tripKM){
+        double cost=0;
+        cost = (tripKM * userList.get(userI).his.get(historyI).vehicleRentPrice);
+        if(tripKM>500) {
+            cost = (tripKM * userList.get(userI).his.get(historyI).vehicleRentPrice);
+            cost = cost + (cost * 0.15);
+        }
+        return cost;
+    }
+    static void finePayment(double n){
+        System.out.println("Pay By Cash--->(y/n)");
+        sc.nextLine();
+        String s=sc.nextLine();
+        if(s.equals("y")) {
+            System.out.println("Payment Completed!");
+        }
+        else if(s.equals("n")){
+            System.out.println("Your Fine Amount will be Reduced in your Security Deposit!!!");
+            userList.get(userI).balance -= n;
+        }
+        else System.out.println("Invalid Number");
+    }
+    static void vehicleDamage() {
+        System.out.print("Enter the vehicle ID :");
+        sc.nextLine();
+        String temp_isbn= sc.nextLine();
+        for(int i=0;i<borrowList.size();i++){
+            if(userList.get(userI).userID==borrowList.get(i).userID && borrowList.get(i).vehicleID.equals(temp_isbn)){
+                LocalDate day=LocalDate.now();
+                Period days= Period.between(userList.get(userI).his.get(historyI).borrowDate,day);
+                System.out.println("Enter the Kilometers : ");
+                int tripKM=sc.nextInt();
+                System.out.println("Damage label : \n1.Low\n2.Medium\n3.High");
+                int damage =sc.nextInt();
+                double temp_amt=0;
+                switch (damage){
                     case 1:
-                        ViewVehicle();
+                        temp_amt=temp_amt+costfunction(tripKM)+(costfunction(tripKM)*0.20);
+                        System.out.println("You have Fined 20% of the Trip Amount of Rs."+temp_amt+"0 due to Lost of the vehicle...");
                         break;
                     case 2:
-                        SearchVehicle();
+                        temp_amt=temp_amt+costfunction(tripKM)+(costfunction(tripKM)*0.50);
+                        System.out.println("You have Fined 50% of the Trip Amount of Rs."+temp_amt+"0 due to Lost of the vehicle...");
                         break;
                     case 3:
-                        BorrowersDetails();
+                        temp_amt=temp_amt+costfunction(tripKM)+(costfunction(tripKM)*0.75);
+                        System.out.println("You have Fined 75% of the Trip Amount of Rs."+temp_amt+"0 due to Lost of the vehicle...");
+                        break;
+                    default:
+                        System.out.println("Invalid Number");
+                        break;
+                }
+                finePayment(temp_amt);
+                vehicleList.get(i).vehicleTripKM+=tripKM;
+                borrowList.remove(i);
+            }
+            else{
+                System.out.println("Entered ID is not in your Borrowed History Please Try again...");
+            }
+        }
+        System.out.println();
+    }
+    static void borrowHistory() {
+        System.out.println("------------- Your Borrow History ------------- ");
+        System.out.println();
+        System.out.println(String.format("%-4s %-18s %-18s %-18s %-18s %-22s %-18s %-26s %-26s", "SNo", "Vehicle ID", "Vehicle Type", "Vehicle Name", "Vehicle Model", "vehicle Price", "Vehicle Rent Price", "Vehicle Total Kilometer", "Vehicle Trip Kilometer"));
+        int f = 0;
+        for (int i = 0; i < userList.get(userI).his.size(); i++) {
+            if (userList.get(userI).userID == userList.get(userI).his.get(i).userID) {
+                System.out.println(String.format("%-4s %-18s %-18s %-18s %-18s %-22s %-18s %-26s %-26s", (i + 1), vehicleList.get(i).vehicleID, vehicleList.get(i).vehicleType, vehicleList.get(i).vehicleName, vehicleList.get(i).vehicleModel, vehicleList.get(i).vehiclePrice, vehicleList.get(i).vehicleRentPrice, vehicleList.get(i).vehicleTotalKM, vehicleList.get(i).vehicleTripKM));
+                f++;
+            }
+        }
+        if (f == 0) {
+            System.out.println("No Borrow History left....");
+        }
+        System.out.println();
+    }
+    private static void borrower(){
+        System.out.println("User Login Page");
+        System.out.println("Enter User ID : ");
+        sc.nextLine();
+        int password =sc.nextInt();
+        System.out.println("Enter Password : ");
+        sc.nextLine();
+        String n= sc.nextLine();
+        int c=0;
+        for(int i=0;i<userList.size();i++) {
+            if (userList.get(i).userID==password && userList.get(i).userPassword .equals(n)) {
+                userTaken=0;
+                userI=i;
+                c++;
+                System.out.println("User Logged In Successfully");
+            }
+        }
+        if(c>0) {
+            int n2=0;
+            do{
+                System.out.println("-----WELCOME USER-----");
+                System.out.println("1.View all vehicles");
+                System.out.println("2.Borrow vehicle");
+                System.out.println("3.Return vehicle");
+                System.out.println("4.Check Balance");
+                System.out.println("5.Search vehicle");
+                System.out.println("6.Borrowed History");
+                System.out.println("0.Exit");
+                System.out.println();
+                n2=sc.nextInt();
+                switch (n2){
+                    case 0:
+                        System.out.println("User Logged out successfully");
+                        break;
+                    case 1:
+                        viewVehicles();
+                        break;
+                    case 2:
+                        borrowVehicle();
+                        break;
+                    case 3:
+                        vehicleReturn();
                         break;
                     case 4:
-                        userDetails();
+                        System.out.println("Your Balance is : "+userList.get(userI).balance+".00");
+                        System.out.println();
                         break;
                     case 5:
-                        serviceVehicle();
+                        userSearchVehicle();
                         break;
                     case 6:
-                        addUser();
-                        break;
-                    case 7:
-                        addVehicle();
-                        break;
-                    case 8:
-                        addNewVehicle();
-                        break;
-                    case 9:
                         borrowHistory();
                         break;
                     default:
-                        System.out.println("Invalid Input! Retry!!");
+                        System.out.println("Invalid Number");
                         break;
                 }
-            }while (adCh != 10);
+            }while(n2!=0);
         }
+        else System.out.println("Please Check ID or Password!!!");
     }
-    static void user(){
-        int usOp=0;
-        do{
-            System.out.println("----- You Have Chosen USER Login -----");
-            System.out.println("1.User Signup");
-            System.out.println("2.User Signing");
-            System.out.println("3.Exit");
-            System.out.println("Enter Choice : ");
-            usOp = sc.nextInt();
-            switch (usOp){
-                case 1:
-                    addUser();
-                    break;
-                case 2:
-                    userSigning();
-                    break;
-                case 3:
-                    break;
-                default:
-                    System.out.println("Invalid Input!,Retry!!");
-            }
-        }while(usOp!=3);
+    private static void admin(){
+        System.out.println("Admin Login Page");
+        System.out.println("Enter user name: ");
+        sc.nextLine();
+        String name1 = sc.nextLine();
+        System.out.println("Enter password: ");
+        int password1 = sc.nextInt();
+        if (name1.equals(adminEmail) && password1 == adminPassword) {
+            System.out.println();
+            System.out.println("Admin Logged in Successfully");
+            int n1 = 0;
+            do {
+                System.out.println("-----WELCOME ADMIN-----");
+                System.out.println("1.Add vehicles");
+                System.out.println("2.Remove vehicles");
+                System.out.println("3.View All vehicles");
+                System.out.println("4.Modify vehicles");
+                System.out.println("5.View Renters List");
+                System.out.println("6.Search vehicle");
+                System.out.println("0.Exit");
+                System.out.println();
+                n1 = sc.nextInt();
+                switch (n1) {
+                    case 0:
+                        System.out.println("Admin Logged out successfully");
+                        break;
+                    case 1:
+                        addVehicle();
+                        break;
+                    case 2:
+                        removeVehicle();
+                        break;
+                    case 3:
+                        viewVehicles();
+                        break;
+                    case 4:
+                        modifyVehicle();
+                        break;
+                    case 5:
+                        viewUsers();
+                        break;
+                    case 6:
+                        adminSearchVehicle();
+                        break;
+                    default:
+                        System.out.println("Invalid Number");
+                        break;
+                }
+            } while (n1 != 0);
+        }
+        else {
+            System.out.println("Login Id or Password Incorrect!!!");
+            System.out.println("!-----Please Retry Again-----!");
+            System.out.println();
+        }
     }
 
     public static void main(String[] args) {
-        ArrayList<vDetails> ve = new ArrayList<>();
-        vehiclesList.add(new Vehicle("Honda-i10",ve,"car"));
-        vehiclesList.get(0).vDetail.add(new vDetails("VN1","Honda","TN06",0,0,"Yes","Yes"));
-        vehiclesList.get(0).vDetail.add(new vDetails("VN2","Honda","TN01",0,0,"Yes","Yes"));
-        ArrayList<Borrow> ub = new ArrayList<>();
-        userList.add(new User("12345","12345",10000,"UID1",ub));
-        int ch=0;
+        ArrayList<Borrow> his =new ArrayList<>();
+        user u = new user("a","1",35000,1,his);
+        userList.add(u);
+        vehicle v = new vehicle("Car","c1","Polo",2015,15,500000,35680,0);
+        vehicleList.add(v);
+        int n=0;
         do{
-            System.out.println("----- Welcome To Vehicle Rental System -----");
-            System.out.println("1.Admin Login");
-            System.out.println("2.User Login");
-            System.out.println("3.Exit");
-            System.out.println("Enter Choice : ");
-            ch = sc.nextInt();
-            switch (ch) {
+            System.out.println("-----LIBRARY MANAGEMENT SYSTEM-----");
+            System.out.println("1.Admin");
+            System.out.println("2.New User");
+            System.out.println("3.Existing User");
+            System.out.println("0.Exit");
+            System.out.println();
+            n=sc.nextInt();
+            switch (n){
+                case 0:
+                    System.out.println("Exit Successfully");
+                    break;
                 case 1:
                     admin();
                     break;
                 case 2:
-                    user();
+                    newUser();
                     break;
                 case 3:
-                    System.out.println("Thanks for Using!");
-                    break;
+                    borrower();
                 default:
-                    System.out.println("Invalid Input");
+                    System.out.println("Invalid Number");
                     break;
             }
-        }while (ch!=3);
+        }while(n!=0);
     }
 }
