@@ -1,5 +1,3 @@
-
-
 import java.util.*;
 
 class Merchant{
@@ -88,14 +86,13 @@ public class ShoppingApplication {
     public static ArrayList<Products> productList = new ArrayList<>();
     public static ArrayList<Approval> approvalList = new ArrayList<>();
     public static ArrayList<Orders> orderList = new ArrayList<>();
-    static String adminEmail="a";
+    static String adminEmail="admin";
     static int adminPassword=1;
     static int mi =0;
     static int ui =0;
     static int userBill=0;
     static int merchantId=0;
     static int merchantApprove=0;
-
 
     static boolean checkIfAlreadyExist(String name){
         for(int i=0;i<merchantList.size();i++) {
@@ -111,6 +108,9 @@ public class ShoppingApplication {
         }
         return true;
     }
+
+    // Admin Function--------------------------
+
     static void addMerchant(){
         System.out.println("Enter Merchant Name : ");
         sc.nextLine();
@@ -183,6 +183,61 @@ public class ShoppingApplication {
         }
     }
 
+    static void adminFunction(){
+        System.out.println("Admin Login Page");
+        System.out.println("Enter Admin name: ");
+        sc.nextLine();
+        String name1 = sc.nextLine();
+        System.out.println("Enter password: ");
+        int password1 = sc.nextInt();
+        if (name1.equals(adminEmail) && password1 == adminPassword) {
+            System.out.println();
+            System.out.println("Admin Logged in Successfully");
+            int n1 = 0;
+            do {
+                System.out.println("-----WELCOME ADMIN-----");
+                System.out.println("1.Add Merchant");
+                System.out.println("2.Remove Merchant");
+                System.out.println("3.View All Products");
+                System.out.println("4.Approve Merchant");
+                System.out.println("5.View Merchant List");
+                System.out.println("0.Exit");
+                System.out.println();
+                n1 = sc.nextInt();
+                switch (n1) {
+                    case 0:
+                        System.out.println("Admin Logged out successfully");
+                        break;
+                    case 1:
+                        addMerchant();
+                        break;
+                    case 2:
+                        removeMerchant();
+                        break;
+                    case 3:
+                        viewAllProducts();
+                        break;
+                    case 4:
+                        approveMerchant();
+                        break;
+                    case 5:
+                        viewMerchantList();
+                        break;
+                    default:
+                        System.out.println("Invalid Number");
+                        break;
+                }
+
+            } while (n1 != 0);
+        }
+        else {
+            System.out.println("Login Id or Password Incorrect!!!");
+            System.out.println("!-----Please Retry Again-----!");
+            System.out.println();
+        }
+    }
+
+    // Merchant Function--------------------------
 
     static void newMerchant(){
         System.out.println("Enter Merchant name : ");
@@ -199,6 +254,7 @@ public class ShoppingApplication {
         else System.out.println("Merchant Name is Already Exists!");
         System.out.println();
     }
+
     public static int noOfProduct(String k){
         int n=0;
         for(int i=0;i<productList.size();i++){
@@ -304,6 +360,61 @@ public class ShoppingApplication {
         System.out.println();
     }
 
+    static void merchantFunction(){
+        System.out.println("Merchant Login Page");
+        System.out.println("Enter Merchant ID : ");
+        sc.nextLine();
+        String n= sc.nextLine();
+        System.out.println("Enter Password : ");
+        int password =sc.nextInt();
+        int c=0;
+        for(int i=0;i<merchantList.size();i++) {
+            if (merchantList.get(i).merchantID.equals(n) && merchantList.get(i).merchantPassword == password) {
+                mi=i;
+                c++;
+                System.out.println("Merchant Logged In Successfully");
+            }
+        }
+        if(c>0) {
+            int n2 = 1;
+            do {
+                System.out.println();
+                System.out.println("-----WELCOME MERCHANT-----");
+                System.out.println("1.Add Products");
+                System.out.println("2.Remove Products");
+                System.out.println("3.Update Products");
+                System.out.println("4.View My Products");
+                System.out.println("0.Exit");
+                System.out.println();
+                n2 = sc.nextInt();
+                switch (n2) {
+                    case 0:
+                        System.out.println("Merchant Logged out successfully");
+                        break;
+                    case 1:
+                        addProducts(mi);
+                        break;
+                    case 2:
+                        removeProducts(mi);
+                        break;
+                    case 3:
+                        update();
+                        break;
+                    case 4:
+                        listMyProduct(mi);
+                        break;
+                    default:
+                        System.out.println("Invalid Number");
+                        break;
+                }
+
+            } while (n2 != 0);
+        }
+        else System.out.println("Please Check ID or Password!!!");
+    }
+
+    // User Function-----------------------------
+
     static void newUser(){
         System.out.println("Enter User Mail ID : ");
         sc.nextLine();
@@ -320,6 +431,7 @@ public class ShoppingApplication {
         } else System.out.println("User Mail ID Already Exist!");
         System.out.println();
     }
+
     public static void removeProduct(int k){
         System.out.println("Remove product \n1.Yes  2.No");
         int n=sc.nextInt();
@@ -457,125 +569,6 @@ public class ShoppingApplication {
         System.out.println();
     }
 
-    static void adminFunction(){
-        System.out.println("Admin Login Page");
-        System.out.println("Enter user name: ");
-        sc.nextLine();
-        String name1 = sc.nextLine();
-        System.out.println("Enter password: ");
-        int password1 = sc.nextInt();
-        if (name1.equals(adminEmail) && password1 == adminPassword) {
-            System.out.println();
-            System.out.println("Admin Logged in Successfully");
-            int n1 = 0;
-            do {
-                System.out.println("-----WELCOME ADMIN-----");
-                System.out.println("1.Add Merchant");
-                System.out.println("2.Remove Merchant");
-                System.out.println("3.View All Products");
-                System.out.println("4.Approve Merchant");
-                System.out.println("5.View Merchant List");
-                System.out.println("0.Exit");
-                System.out.println();
-                n1 = sc.nextInt();
-                switch (n1) {
-                    case 0:
-                        System.out.println("Admin Logged out successfully");
-                        break;
-                    case 1:
-                        addMerchant();
-                        break;
-                    case 2:
-                        removeMerchant();
-                        break;
-                    case 3:
-                        viewAllProducts();
-                        break;
-                    case 4:
-                        approveMerchant();
-                        break;
-                    case 5:
-                        viewMerchantList();
-                        break;
-                    default:
-                        System.out.println("Invalid Number");
-                        break;
-                }
-
-            } while (n1 != 0);
-        }
-        else {
-            System.out.println("Login Id or Password Incorrect!!!");
-            System.out.println("!-----Please Retry Again-----!");
-            System.out.println();
-        }
-    }
-    static void merchantFunction(){
-        System.out.println("Merchant Login Page");
-        System.out.println("Enter Merchant ID : ");
-        sc.nextLine();
-        String n= sc.nextLine();
-        System.out.println("Enter Password : ");
-        int password =sc.nextInt();
-        int c=0;
-        for(int i=0;i<merchantList.size();i++) {
-            if (merchantList.get(i).merchantID.equals(n) && merchantList.get(i).merchantPassword == password) {
-                mi=i;
-                c++;
-                System.out.println("Merchant Logged In Successfully");
-            }
-        }
-        if(c>0) {
-            int n2 = 1;
-            do {
-                System.out.println();
-                System.out.println("-----WELCOME MERCHANT-----");
-                System.out.println("1.Add Products");
-                System.out.println("2.Remove Products");
-                System.out.println("3.Update Products");
-                System.out.println("4.View My Products");
-//                System.out.println("5.Repeated Customers");
-//                System.out.println("6.View Most Soled Products");
-//                System.out.println("7.View Sales Report");
-                System.out.println("0.Exit");
-                System.out.println();
-                n2 = sc.nextInt();
-//                String s = merchantList.get(mi).merchantID;
-//                int no = noOfProduct(s);
-                switch (n2) {
-                    case 0:
-                        System.out.println("Merchant Logged out successfully");
-                        break;
-                    case 1:
-                        addProducts(mi);
-                        break;
-                    case 2:
-                        removeProducts(mi);
-                        break;
-                    case 3:
-                        update();
-                        break;
-                    case 4:
-                        listMyProduct(mi);
-                        break;
-//                case 7:
-//                    repeatedCustomer();
-//                    break;
-//                case 8:
-//                    viweMostSoledProducts();
-//                    break;
-//                case 9:
-//                    viewSalesReport();
-//                    break;
-                    default:
-                        System.out.println("Invalid Number");
-                        break;
-                }
-
-            } while (n2 != 0);
-        }
-        else System.out.println("Please Check ID or Password!!!");
-    }
     static void userFunction(){
         int c=0;
         System.out.println("User Login Page");
@@ -600,10 +593,6 @@ public class ShoppingApplication {
                 System.out.println("2.View Available Products");
                 System.out.println("3.View Cart");
                 System.out.println("4.Check Balance");
-//            System.out.println("5.");
-//            System.out.println("6.Checkout");
-//            System.out.println("7.List All Previous Orders");
-//            System.out.println("8.View Purchase History");
                 System.out.println("0.Exit");
                 System.out.println();
                 n3 = sc.nextInt();
@@ -635,6 +624,8 @@ public class ShoppingApplication {
         }else System.out.println("Please Check ID or Password!!!");
     }
 
+    // Main Function--------------------------
+
     public static void main(String[] args) {
         Merchant m1 =new Merchant("b1",1,"y","m1");
         Merchant m2 =new Merchant("b2",1,"y","m2");
@@ -646,7 +637,7 @@ public class ShoppingApplication {
         productList.add(p1);
         int n=0;
         do{
-            System.out.println("-----AMAZON SHOPPING APP-----");
+            System.out.println("-----SHOPPING APPLICATION-----");
             System.out.println("1.Admin Login");
             System.out.println("2.New Merchant");
             System.out.println("3.Merchant Login");
