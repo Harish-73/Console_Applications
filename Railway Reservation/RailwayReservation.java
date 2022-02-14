@@ -1,5 +1,3 @@
-
-
 import java.util.*;
 
 class User{
@@ -77,6 +75,8 @@ class RailwayReservation {
     static int trainCount=0;
 
 
+    // Admin Function-------------------------------------------------
+
     static void approveUser(){
         for(int i=0;i<appUser.size();i++){
             System.out.println("User Name : "+appUser.get(i).approvalUserName);
@@ -151,7 +151,7 @@ class RailwayReservation {
         }
         System.out.println();
     }
-    static void admin(){
+    static void admin() {
         System.out.println("Admin Login Page");
         System.out.println("Enter user name: ");
         sc.nextLine();
@@ -195,13 +195,15 @@ class RailwayReservation {
                 }
 
             } while (n1 != 0);
-        }
-        else {
+        } else {
             System.out.println("Login Id or Password Incorrect!!!");
             System.out.println("!-----Please Retry Again-----!");
             System.out.println();
         }
     }
+
+    // User Function---------------------------------------------------------------
+
 
     public static boolean checkExistingInUser(String mailId, int pno){
         for(int i=0;i<user.size();i++){
@@ -230,6 +232,7 @@ class RailwayReservation {
         }else System.out.println("The User Name or Phone Number is Already Exists \nPlease Try another Name or Number!");
         System.out.println();
     }
+
     static void viewTrains() {
         System.out.println("-----Train List-----");
         System.out.println("SNo  Train_Name          Boarding_Point      Destination_Point       Total_No._of_Seats      Seats_Allotted");
@@ -412,8 +415,11 @@ class RailwayReservation {
             System.out.println();
         }
     }
+
+    // Main Function---------------------------------------------------
+
     public static void main(String[] args) {
-        User u1 = new User("u1","1",1234567890,"y",10000,0,0);
+        User u1 = new User("user1","1",1234567890,"y",10000,0,0);
         user.add(u1);
         int[][] seat=new int[5][8];
         ArrayList<String> s = new ArrayList<String>();
