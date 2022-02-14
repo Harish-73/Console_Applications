@@ -1,4 +1,3 @@
-
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.*;
@@ -53,13 +52,11 @@ public class LibraryManagementSystem {
     static ArrayList<user> userList =new ArrayList<>();
     static ArrayList<Book> bookList =new ArrayList<>();
     static ArrayList<Borrow> borrowList =new ArrayList<>();
-    static String adminEmail="a";
+    static String adminEmail="admin";
     static int adminPassword=1;
     static int historyi=0;
     static int usertaken=0;
     static int useri=0;
-//    static int totalUsersBorrowed=0;
-//    static int totalTimesBorrowed=0;
 
     static int amount(int b){
         while (b<1500){
@@ -85,6 +82,9 @@ public class LibraryManagementSystem {
         System.out.println("Your User Id is "+id+" Please Remember for Login");
         System.out.println();
     }
+    
+    // Admin Function-----------------------------------------------------------------
+    
     public static boolean checkExistingInUser(String mailId, int pno){
         for(int i=0;i<userList.size();i++){
             if(userList.get(i).userName.equals(mailId) && userList.get(i).userID==pno){
@@ -289,22 +289,6 @@ public class LibraryManagementSystem {
         }else System.out.println("No Books Available!");
         System.out.println();
     }
-    static void userSearchBook(){
-        int c=0;
-        System.out.println("Enter Book Title : ");
-        sc.nextLine();
-        String uName = sc.nextLine();
-        for(int i=0;i<bookList.size();i++){
-            if(bookList.get(i).bookTitle.equals(uName)){
-                c++;
-                System.out.println(String.format("%-4s %-12s %-30s %-24s %-16s %-16s %-16s ", "SNo", "ISBN_Number", "Book_Name", "Author_Name", "Book_Type", "Book_Price", "Book_Count"));
-                System.out.println(String.format("%-4s %-18s %-24s %-24s %-20s %-16s %-16s ",c,bookList.get(i).bookID,bookList.get(i).bookTitle,bookList.get(i).bookAuthor,bookList.get(i).bookType,bookList.get(i).bookPrice,bookList.get(i).bookCount));
-            }
-        }
-        if(c==0) System.out.println("Invalid Book Title or Book is not Presented!!!");
-        else System.out.println("These are the Results!");
-        System.out.println();
-    }
     static void adminSearchBook(){
         int c=0;
         System.out.println("Enter ISBN Number : ");
@@ -320,11 +304,110 @@ public class LibraryManagementSystem {
         else System.out.println("These are the Results!");
         System.out.println();
     }
-    static void manageFine(){
-        System.out.println("8");
-        System.out.println();
-    }
 
+    static void admin(){
+        System.out.println("Admin Login Page");
+        System.out.println("Enter user name: ");
+        sc.nextLine();
+        String name1 = sc.nextLine();
+        System.out.println("Enter password: ");
+        int password1 = sc.nextInt();
+        if (name1.equals(adminEmail) && password1 == adminPassword) {
+            System.out.println();
+            System.out.println("Admin Logged in Successfully");
+            int n1=0;
+            do{
+                System.out.println("-----WELCOME ADMIN-----");
+                System.out.println("1.Manage Users");
+                System.out.println("2.Manage Books");
+                System.out.println("0.Exit");
+                System.out.println();
+                n1=sc.nextInt();
+                switch (n1){
+                    case 0:
+                        System.out.println("Admin Logged out successfully");
+                        break;
+                    case 1:
+                        int n3=0;
+                        do{
+                            System.out.println("-----USER MANAGEMENT-----");
+                            System.out.println("1.Add User");
+                            System.out.println("2.Remove User");
+                            System.out.println("3.View Users List");
+//                        System.out.println("4.Manage Borrowers Fine Limit");
+                            System.out.println("0.Exit");
+                            System.out.println();
+                            n3=sc.nextInt();
+                            switch (n3){
+                                case 0:
+                                    System.out.println("Exited from User Management");
+                                    break;
+                                case 1:
+                                    addUser();
+                                    break;
+                                case 2:
+                                    removeUser();
+                                    break;
+                                case 3:
+                                    viewUsers();
+                                    break;
+                                default:
+                                    System.out.println("Invalid Number");
+                                    break;
+                            }
+                        }while(n3!=0);
+                        break;
+                    case 2:
+                        int n4=0;
+                        do{
+                            System.out.println("-----BOOK MANAGEMENT-----");
+                            System.out.println("1.Add Books");
+                            System.out.println("2.Modify Books");
+                            System.out.println("3.Remove Books");
+                            System.out.println("4.View Books List");
+                            System.out.println("5.Search Book");
+                            System.out.println("0.Exit");
+                            System.out.println();
+                            n4=sc.nextInt();
+                            switch (n4){
+                                case 0:
+                                    System.out.println("Exited from Book Management");
+                                    break;
+                                case 1:
+                                    addBook();
+                                    break;
+                                case 2:
+                                    modifyBook();
+                                    break;
+                                case 3:
+                                    removeBook();
+                                    break;
+                                case 4:
+                                    viewBooks();
+                                    break;
+                                case 5:
+                                    adminSearchBook();
+                                    break;
+                                default:
+                                    System.out.println("Invalid Number");
+                                    break;
+                            }
+                        }while(n4!=0);
+                        break;
+                    default:
+                        System.out.println("Invalid Number");
+                        break;
+                }
+            }while(n1!=0);
+        }else {
+            System.out.println("Login Id or Password Incorrect!!!");
+            System.out.println("!-----Please Retry Again-----!");
+            System.out.println();
+        }
+    }
+    
+    // User Function---------------------------------------------------------
+    
     public static boolean checkHistory(int pno){
         if(borrowList.size()>0) {
             for (int i = 0; i < borrowList.size(); i++) {
@@ -492,109 +575,26 @@ public class LibraryManagementSystem {
         }
         System.out.println();
     }
-
-    static void admin(){
-        System.out.println("Admin Login Page");
-        System.out.println("Enter user name: ");
+    static void userSearchBook(){
+        int c=0;
+        System.out.println("Enter Book Title : ");
         sc.nextLine();
-        String name1 = sc.nextLine();
-        System.out.println("Enter password: ");
-        int password1 = sc.nextInt();
-        if (name1.equals(adminEmail) && password1 == adminPassword) {
-            System.out.println();
-            System.out.println("Admin Logged in Successfully");
-        int n1=0;
-        do{
-            System.out.println("-----WELCOME ADMIN-----");
-            System.out.println("1.Manage Users");
-            System.out.println("2.Manage Books");
-            System.out.println("0.Exit");
-            System.out.println();
-            n1=sc.nextInt();
-            switch (n1){
-                case 0:
-                    System.out.println("Admin Logged out successfully");
-                    break;
-                case 1:
-                    int n3=0;
-                    do{
-                        System.out.println("-----USER MANAGEMENT-----");
-                        System.out.println("1.Add User");
-                        System.out.println("2.Remove User");
-                        System.out.println("3.View Users List");
-//                        System.out.println("4.Manage Borrowers Fine Limit");
-                        System.out.println("0.Exit");
-                        System.out.println();
-                        n3=sc.nextInt();
-                        switch (n3){
-                            case 0:
-                                System.out.println("Exited from User Management");
-                                break;
-                            case 1:
-                                addUser();
-                                break;
-                            case 2:
-                                removeUser();
-                                break;
-                            case 3:
-                                viewUsers();
-                                break;
-                            default:
-                                System.out.println("Invalid Number");
-                                break;
-                        }
-                    }while(n3!=0);
-                    break;
-                case 2:
-                    int n4=0;
-                    do{
-                        System.out.println("-----BOOK MANAGEMENT-----");
-                        System.out.println("1.Add Books");
-                        System.out.println("2.Modify Books");
-                        System.out.println("3.Remove Books");
-                        System.out.println("4.View Books List");
-                        System.out.println("5.Search Book");
-                        System.out.println("0.Exit");
-                        System.out.println();
-                        n4=sc.nextInt();
-                        switch (n4){
-                            case 0:
-                                System.out.println("Exited from Book Management");
-                                break;
-                            case 1:
-                                addBook();
-                                break;
-                            case 2:
-                                modifyBook();
-                                break;
-                            case 3:
-                                removeBook();
-                                break;
-                            case 4:
-                                viewBooks();
-                                break;
-                            case 5:
-                                adminSearchBook();
-                                break;
-                            default:
-                                System.out.println("Invalid Number");
-                                break;
-                        }
-                    }while(n4!=0);
-                    break;
-                default:
-                    System.out.println("Invalid Number");
-                    break;
+        String uName = sc.nextLine();
+        for(int i=0;i<bookList.size();i++){
+            if(bookList.get(i).bookTitle.equals(uName)){
+                c++;
+                System.out.println(String.format("%-4s %-12s %-30s %-24s %-16s %-16s %-16s ", "SNo", "ISBN_Number", "Book_Name", "Author_Name", "Book_Type", "Book_Price", "Book_Count"));
+                System.out.println(String.format("%-4s %-18s %-24s %-24s %-20s %-16s %-16s ",c,bookList.get(i).bookID,bookList.get(i).bookTitle,bookList.get(i).bookAuthor,bookList.get(i).bookType,bookList.get(i).bookPrice,bookList.get(i).bookCount));
             }
-        }while(n1!=0);
-        }else {
-            System.out.println("Login Id or Password Incorrect!!!");
-            System.out.println("!-----Please Retry Again-----!");
-            System.out.println();
         }
+        if(c==0) System.out.println("Invalid Book Title or Book is not Presented!!!");
+        else System.out.println("These are the Results!");
+        System.out.println();
     }
+
+    
     static void borrower(){
-        System.out.println("Merchant Login Page");
+        System.out.println("User Login Page");
         System.out.println("Enter User ID : ");
         sc.nextLine();
         int password =sc.nextInt();
@@ -657,9 +657,12 @@ public class LibraryManagementSystem {
         }
         else System.out.println("Please Check ID or Password!!!");
     }
+    
+    // Main Function------------------------------------------------------
+    
     public static void main(String[] args) {
         ArrayList<Borrow> his =new ArrayList<>();
-        user u1 = new user("a","1",1000,1,his);
+        user u1 = new user("user1","1",1000,1,his);
         userList.add(u1);
         bookList.add(new Book("The Greatness of Guide","Robin Sharma","General",300,100,3));
         bookList.add(new Book("The Adventures of Tow Sawyer","Mark Twain","Novel",200,101,3));
