@@ -1,8 +1,3 @@
-
-import java.util.Scanner;
-
-///*
-
 import java.util.*;
 
 class UserDetail{
@@ -23,7 +18,7 @@ class AutomatedTellerMachine {
     static int[] noOfRs ={3,3,3,3};
     static int[]  rs = {2000,500,200,100};
     static int total=0;
-    static String adminName = "a";
+    static String adminName = "admin";
     static int adminPin = 1;
     static UserDetail u[]= new UserDetail[4];
     static int miniN,miniM=0;
@@ -31,19 +26,8 @@ class AutomatedTellerMachine {
     static int w[]=new int[u.length];
     static int temp=0,k=0;
 
+    // Admin Function------------------------------------------------
 
-    static int userd(String name2,int password2){
-        int p=0;
-        for(int i=0;i<u.length;i++){
-            if (u[i].name.equals(name2) && u[i].password == password2){//(name2.equals(userName) && password2 == userPin)
-                miniM=i;
-                miniN=i;
-                k=i;
-                p++;
-            }
-        }
-        return p;
-    }
     static void addAmount(){
         System.out.println();
         System.out.println("Load Amount");
@@ -64,6 +48,21 @@ class AutomatedTellerMachine {
         }
         System.out.println("Total Amount Left: "+total);
         System.out.println();
+    }
+
+    // User Function-----------------------------------------------------
+
+    static int userd(String name2,int password2){
+        int p=0;
+        for(int i=0;i<u.length;i++){
+            if (u[i].name.equals(name2) && u[i].password == password2){//(name2.equals(userName) && password2 == userPin)
+                miniM=i;
+                miniN=i;
+                k=i;
+                p++;
+            }
+        }
+        return p;
     }
     static int remainder(int n){
         for (int i = 0; i < 4; i++) {
@@ -192,6 +191,8 @@ class AutomatedTellerMachine {
         }
         else System.out.println("Check Transfer Account Number");
     }
+
+    // Main Function--------------------------------------------
     public static void main(String[] args) {
         /*
         for (int i = 0; i < 2; i++) {
@@ -207,10 +208,10 @@ class AutomatedTellerMachine {
             System.out.println(u[i].userID);
         }
         */
-        u[0] = new UserDetail("a",1,52300,"u1");
-        u[1] = new UserDetail("b",1,72300,"u2");
-        u[2] = new UserDetail("c",1,62300,"u3");
-        u[3] = new UserDetail("d",1,42300,"u4");
+        u[0] = new UserDetail("user1",1,52300,"u1");
+        u[1] = new UserDetail("user2",1,72300,"u2");
+        u[2] = new UserDetail("user3",1,62300,"u3");
+        u[3] = new UserDetail("user4",1,42300,"u4");
         try {
             int n = 0;
             do {
@@ -382,3 +383,4 @@ class AutomatedTellerMachine {
         System.out.println("Thanks for Using");
     }
 }
+
