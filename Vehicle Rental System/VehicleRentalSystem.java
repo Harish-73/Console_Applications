@@ -1,4 +1,3 @@
-
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.*;
@@ -56,12 +55,14 @@ public class VehicleRentalSystem {
     static ArrayList<user> userList = new ArrayList<>();
     static ArrayList<vehicle> vehicleList = new ArrayList<>();
     static ArrayList<Borrow> borrowList = new ArrayList<>();
-    static String adminEmail = "a";
+    static String adminEmail = "admin";
     static int adminPassword = 1;
     static int historyI = 0;
     static int userTaken = 0;
     static int userI = 0;
 
+    // User Function-------------------------------------------------------
+    
     static int amount(int b) {
         while (b < 30000) {
             System.out.println("Your Initial Balance Must be Equal to or Greater Than 30000.\nPlease Make your Initial Payment According to it.");
@@ -69,7 +70,6 @@ public class VehicleRentalSystem {
         }
         return b;
     }
-
     private static void newUser() {
         System.out.println("Enter User Name : ");
         sc.nextLine();
@@ -86,224 +86,6 @@ public class VehicleRentalSystem {
         System.out.println("New User Added Successfully");
         System.out.println("Your User Id is " + id + " Please Remember for Login");
         System.out.println();
-    }
-    static void addVehicle() {
-        System.out.println("1.Car \t 2.Bike \nEnter Vehicle Type : ");
-        int t = sc.nextInt();
-        String id = "", type = "";
-        if (t == 1) {
-            id += "C";
-            type = "Car";
-        } else if (t == 2) {
-            id += "B";
-            type = "Bile";
-        } else System.out.println("Invalid Number");
-        System.out.println("Enter " + type + " Name : ");
-        sc.nextLine();
-        String n = sc.nextLine();
-        System.out.println("Enter " + type + " Model : ");
-        int pno = sc.nextInt();
-        System.out.println("Enter " + type + " Price : ");
-        int tp = sc.nextInt();
-        System.out.println("Enter " + type + "'s Rent Price(1 km) : ");
-        int rp = sc.nextInt();
-        System.out.println("Enter " + type + "'s Total Kilometer : ");
-        int tkm = sc.nextInt();
-        System.out.println("Enter " + type + "'s Trip Kilometer : ");
-        int km = sc.nextInt();
-        vehicle b = new vehicle(type, (id + (vehicleList.size()+1)), n, pno, rp, tp, tkm, km);
-        vehicleList.add(b);
-        System.out.println("New "+type+" Added Successfully");
-        System.out.println();
-    }
-
-    static void removeVehicle() {
-        int c = 0;
-        System.out.println("1.Car \t 2.Bike \nEnter Vehicle Type : ");
-        int t = sc.nextInt();
-        String type = "";
-        if (t == 1) type = "Car";
-        else if (t == 2) type = "Bile";
-        System.out.println("Enter " + type + " ID : ");
-        String pno = sc.nextLine();
-        for (int i = 0; i < vehicleList.size(); i++) {
-            if (vehicleList.get(i).vehicleID.equals(pno)) {
-                vehicleList.remove(i);
-                c++;
-            }
-        }
-        if (c == 0) System.out.println("The " + type + " does not Exists!!!\nEnter " + type + " & ID Correctly!!!");
-        else System.out.println(type + " Removed Successfully");
-        System.out.println();
-    }
-
-    static void mod_tit(int i) {
-        System.out.print("Enter New Vehicle Name :");
-        String vehicle_tit = sc.next();
-        vehicleList.get(i).vehicleName = vehicle_tit;
-        System.out.println("Vehicle Name Changed Successfully....");
-        System.out.println();
-    }
-
-    static void mod_auth(int i) {
-        System.out.print("Enter New Model :");
-        int vehicle_auth = sc.nextInt();
-        vehicleList.get(i).vehicleModel = vehicle_auth;
-        System.out.println("Vehicle Model Changed Successfully....");
-        System.out.println();
-    }
-
-    static void mod_type(int i) {
-        System.out.print("Enter New Rent Price :");
-        int vehicle_type = sc.nextInt();
-        vehicleList.get(i).vehicleRentPrice = vehicle_type;
-        System.out.println("vehicle Type Changed Successfully....");
-        System.out.println();
-    }
-
-    static void mod_isbn(int i) {
-        System.out.print("Enter New ID number :");
-        String vehicle_isbn = sc.nextLine();
-        vehicleList.get(i).vehicleID = vehicle_isbn;
-        System.out.println("vehicle ISBN Changed Successfully....");
-        System.out.println();
-    }
-
-    static void mod_price(int i) {
-        System.out.print("Enter New vehicle Price :");
-        int vehicle_price = sc.nextInt();
-        vehicleList.get(i).vehiclePrice = vehicle_price;
-        System.out.println("vehicle Title Changed Successfully....");
-        System.out.println();
-    }
-
-    static void mod_count(int i) {
-        System.out.print("Enter New Kilometer :");
-        int vehicle_count = sc.nextInt();
-        vehicleList.get(i).vehicleTotalKM = vehicle_count;
-        System.out.println("vehicle Title Changed Successfully....");
-        System.out.println();
-    }
-
-    static void modifyVehicle() {
-        System.out.print("Enter the Vehicle ID to modify : ");
-        int mod_count = 0;
-        String temp_isbn = sc.nextLine();
-        for (int i = 0; i < vehicleList.size(); i++) {
-            if (vehicleList.get(i).vehicleID.equals(temp_isbn)) {
-                mod_count++;
-                int n6 = 0;
-                do {
-                    System.out.println("1.Modify Vehicle Name");
-                    System.out.println("2.Modify Vehicle Model");
-                    System.out.println("3.Modify Vehicle Rent Price");
-                    System.out.println("4.Modify Vehicle ID");
-                    System.out.println("5.Modify Vehicle Price");
-                    System.out.println("6.Modify Vehicle Total Kilometer");
-                    System.out.println("0.Exit");
-                    n6 = sc.nextInt();
-                    switch (n6) {
-                        case 0:
-                            System.out.println("All Changer Modified Successfully!");
-                            break;
-                        case 1:
-                            mod_tit(i);
-                            break;
-                        case 2:
-                            mod_auth(i);
-                            break;
-                        case 3:
-                            mod_type(i);
-                            break;
-                        case 4:
-                            mod_isbn(i);
-                            break;
-                        case 5:
-                            mod_price(i);
-                            break;
-                        case 6:
-                            mod_count(i);
-                            break;
-                        default:
-                            System.out.println("Invalid Number");
-                            break;
-                    }
-                } while (n6 != 0);
-            }
-        }
-        if (mod_count == 0) {
-            System.out.println("Incorrect ISBN or vehicle not Found....");
-        }
-    }
-
-    static void viewVehicles() {
-        System.out.println("-----Vehicle List-----");
-        if (vehicleList.size() > 0) {
-            System.out.println(String.format("%-4s %-18s %-18s %-18s %-18s %-22s %-20s %-26s %-26s", "SNo", "Vehicle ID", "Vehicle Type", "Vehicle Name", "Vehicle Model", "vehicle Price", "Vehicle Rent Price", "Vehicle Total Kilometer", "Vehicle Trip Kilometer"));
-            for (int i = 0; i < vehicleList.size(); i++) {
-                int n = i;
-                if (vehicleList.get(i).vehicleType.equals("Car") && vehicleList.get(i).vehicleTripKM < 3000) {
-                    System.out.println(String.format("%-4s %-18s %-18s %-18s %-18s %-22s %-20s %-26s %-26s", (n + 1), vehicleList.get(i).vehicleID, vehicleList.get(i).vehicleType, vehicleList.get(i).vehicleName, vehicleList.get(i).vehicleModel, vehicleList.get(i).vehiclePrice, vehicleList.get(i).vehicleRentPrice, vehicleList.get(i).vehicleTotalKM, vehicleList.get(i).vehicleTripKM));
-                } else if (vehicleList.get(i).vehicleType.equals("Bike") && vehicleList.get(i).vehicleTripKM < 1500) {
-                    System.out.println(String.format("%-4s %-18s %-18s %-18s %-18s %-22s %-20s %-26s %-26s", (n + 1), vehicleList.get(i).vehicleID, vehicleList.get(i).vehicleType, vehicleList.get(i).vehicleName, vehicleList.get(i).vehicleModel, vehicleList.get(i).vehiclePrice, vehicleList.get(i).vehicleRentPrice, vehicleList.get(i).vehicleTotalKM, vehicleList.get(i).vehicleTripKM));
-                } else n--;
-            }
-        } else System.out.println("No vehicles Available!");
-        System.out.println();
-    }
-
-    static void viewUsers() {
-        System.out.println("-----User List-----");
-        if (userList.size() > 0) {
-            System.out.println(String.format("%-4s %-8s %-25s %-12s", "SNo", "User_ID", "User_Name", "Balance_Amount"));
-            for (int i = 0; i < userList.size(); i++) {
-                System.out.println(String.format("%-4s %-8s %-25s %-12s", (i + 1), userList.get(i).userID, userList.get(i).userName, userList.get(i).balance));
-            }
-        } else System.out.println("No vehicles Available!");
-        System.out.println();
-    }
-
-    static void userSearchVehicle() {
-        int c = 0;
-        System.out.println("Enter Vehicle Name : ");
-        sc.nextLine();
-        String uName = sc.nextLine();
-        for (int i = 0; i < vehicleList.size(); i++) {
-            if (vehicleList.get(i).vehicleName.equals(uName)) {
-                c++;
-                System.out.println(String.format("%-4s %-18s %-18s %-18s %-18s %-22s %-18s %-26s %-26s", "SNo", "Vehicle ID", "Vehicle Type", "Vehicle Name", "Vehicle Model", "vehicle Price", "Vehicle Rent Price", "Vehicle Total Kilometer", "Vehicle Trip Kilometer"));
-                System.out.println(String.format("%-4s %-18s %-18s %-18s %-18s %-22s %-18s %-26s %-26s", (i + 1), vehicleList.get(i).vehicleID, vehicleList.get(i).vehicleType, vehicleList.get(i).vehicleName, vehicleList.get(i).vehicleModel, vehicleList.get(i).vehiclePrice, vehicleList.get(i).vehicleRentPrice, vehicleList.get(i).vehicleTotalKM, vehicleList.get(i).vehicleTripKM));
-            }
-        }
-        if (c == 0) System.out.println("No Vehicle Found! or Vehicle is Under Service!");
-        else System.out.println("These are the Results!");
-        System.out.println();
-    }
-
-    static void adminSearchVehicle() {
-        int c = 0;
-        System.out.println("1.Car \t 2.Bike \nEnter Vehicle Type : ");
-        int t = sc.nextInt();
-        String type = "";
-        if (t == 1) type = "Car";
-        else if (t == 2) type = "Bile";
-        System.out.println("Enter Vehicle ID  : ");
-        sc.nextLine();
-        String n = sc.nextLine();
-        for (int i = 0; i < vehicleList.size(); i++) {
-            if (vehicleList.get(i).vehicleID.equals(n)) {
-                c++;
-                System.out.println(String.format("%-4s %-18s %-18s %-18s %-18s %-22s %-18s %-26s %-26s", "SNo", "Vehicle ID", "Vehicle Type", "Vehicle Name", "Vehicle Model", "vehicle Price", "Vehicle Rent Price", "Vehicle Total Kilometer", "Vehicle Trip Kilometer"));
-                if (t == 1 && vehicleList.get(i).vehicleTripKM < 3000) {
-                    System.out.println(String.format("%-4s %-18s %-18s %-18s %-18s %-22s %-18s %-26s %-26s", (i + 1), vehicleList.get(i).vehicleID, vehicleList.get(i).vehicleType, vehicleList.get(i).vehicleName, vehicleList.get(i).vehicleModel, vehicleList.get(i).vehiclePrice, vehicleList.get(i).vehicleRentPrice, vehicleList.get(i).vehicleTotalKM, vehicleList.get(i).vehicleTripKM));
-                } else if (t == 2 && vehicleList.get(i).vehicleTripKM < 1500) {
-                    System.out.println(String.format("%-4s %-18s %-18s %-18s %-18s %-22s %-18s %-26s %-26s", (i + 1), vehicleList.get(i).vehicleID, vehicleList.get(i).vehicleType, vehicleList.get(i).vehicleName, vehicleList.get(i).vehicleModel, vehicleList.get(i).vehiclePrice, vehicleList.get(i).vehicleRentPrice, vehicleList.get(i).vehicleTotalKM, vehicleList.get(i).vehicleTripKM));
-                }
-            }
-            if (c == 0) System.out.println("Invalid ID or Vehicle is Under Service!!!");
-            else System.out.println("These are the Results!");
-            System.out.println();
-        }
     }
 
     static void borrowVehicle() {
@@ -337,7 +119,6 @@ public class VehicleRentalSystem {
         } else System.out.println("You only can Book 2 Vehicles at a time!!!");
         System.out.println();
     }
-
     static void vehicleReturn() {
         System.out.println("Enter 1 if Vehicle is Damaged : ");
         int damaged=sc.nextInt();
@@ -453,6 +234,23 @@ public class VehicleRentalSystem {
         }
         System.out.println();
     }
+    static void userSearchVehicle() {
+        int c = 0;
+        System.out.println("Enter Vehicle Name : ");
+        sc.nextLine();
+        String uName = sc.nextLine();
+        for (int i = 0; i < vehicleList.size(); i++) {
+            if (vehicleList.get(i).vehicleName.equals(uName)) {
+                c++;
+                System.out.println(String.format("%-4s %-18s %-18s %-18s %-18s %-22s %-18s %-26s %-26s", "SNo", "Vehicle ID", "Vehicle Type", "Vehicle Name", "Vehicle Model", "vehicle Price", "Vehicle Rent Price", "Vehicle Total Kilometer", "Vehicle Trip Kilometer"));
+                System.out.println(String.format("%-4s %-18s %-18s %-18s %-18s %-22s %-18s %-26s %-26s", (i + 1), vehicleList.get(i).vehicleID, vehicleList.get(i).vehicleType, vehicleList.get(i).vehicleName, vehicleList.get(i).vehicleModel, vehicleList.get(i).vehiclePrice, vehicleList.get(i).vehicleRentPrice, vehicleList.get(i).vehicleTotalKM, vehicleList.get(i).vehicleTripKM));
+            }
+        }
+        if (c == 0) System.out.println("No Vehicle Found! or Vehicle is Under Service!");
+        else System.out.println("These are the Results!");
+        System.out.println();
+    }
+
     private static void borrower(){
         System.out.println("User Login Page");
         System.out.println("Enter User ID : ");
@@ -514,9 +312,205 @@ public class VehicleRentalSystem {
         }
         else System.out.println("Please Check ID or Password!!!");
     }
+
+    // Admin Function---------------------------------------
+
+    static void addVehicle() {
+        System.out.println("1.Car \t 2.Bike \nEnter Vehicle Type : ");
+        int t = sc.nextInt();
+        String id = "", type = "";
+        if (t == 1) {
+            id += "C";
+            type = "Car";
+        } else if (t == 2) {
+            id += "B";
+            type = "Bile";
+        } else System.out.println("Invalid Number");
+        System.out.println("Enter " + type + " Name : ");
+        sc.nextLine();
+        String n = sc.nextLine();
+        System.out.println("Enter " + type + " Model : ");
+        int pno = sc.nextInt();
+        System.out.println("Enter " + type + " Price : ");
+        int tp = sc.nextInt();
+        System.out.println("Enter " + type + "'s Rent Price(1 km) : ");
+        int rp = sc.nextInt();
+        System.out.println("Enter " + type + "'s Total Kilometer : ");
+        int tkm = sc.nextInt();
+        System.out.println("Enter " + type + "'s Trip Kilometer : ");
+        int km = sc.nextInt();
+        vehicle b = new vehicle(type, (id + (vehicleList.size()+1)), n, pno, rp, tp, tkm, km);
+        vehicleList.add(b);
+        System.out.println("New "+type+" Added Successfully");
+        System.out.println();
+    }
+    static void removeVehicle() {
+        int c = 0;
+        System.out.println("1.Car \t 2.Bike \nEnter Vehicle Type : ");
+        int t = sc.nextInt();
+        String type = "";
+        if (t == 1) type = "Car";
+        else if (t == 2) type = "Bile";
+        System.out.println("Enter " + type + " ID : ");
+        String pno = sc.nextLine();
+        for (int i = 0; i < vehicleList.size(); i++) {
+            if (vehicleList.get(i).vehicleID.equals(pno)) {
+                vehicleList.remove(i);
+                c++;
+            }
+        }
+        if (c == 0) System.out.println("The " + type + " does not Exists!!!\nEnter " + type + " & ID Correctly!!!");
+        else System.out.println(type + " Removed Successfully");
+        System.out.println();
+    }
+    //--------------------------- Vehicle Modify Function-----------------------------------------------
+    static void mod_tit(int i) {
+        System.out.print("Enter New Vehicle Name :");
+        String vehicle_tit = sc.next();
+        vehicleList.get(i).vehicleName = vehicle_tit;
+        System.out.println("Vehicle Name Changed Successfully....");
+        System.out.println();
+    }
+    static void mod_auth(int i) {
+        System.out.print("Enter New Model :");
+        int vehicle_auth = sc.nextInt();
+        vehicleList.get(i).vehicleModel = vehicle_auth;
+        System.out.println("Vehicle Model Changed Successfully....");
+        System.out.println();
+    }
+    static void mod_type(int i) {
+        System.out.print("Enter New Rent Price :");
+        int vehicle_type = sc.nextInt();
+        vehicleList.get(i).vehicleRentPrice = vehicle_type;
+        System.out.println("vehicle Type Changed Successfully....");
+        System.out.println();
+    }
+    static void mod_isbn(int i) {
+        System.out.print("Enter New ID number :");
+        String vehicle_isbn = sc.nextLine();
+        vehicleList.get(i).vehicleID = vehicle_isbn;
+        System.out.println("vehicle ISBN Changed Successfully....");
+        System.out.println();
+    }
+    static void mod_price(int i) {
+        System.out.print("Enter New vehicle Price :");
+        int vehicle_price = sc.nextInt();
+        vehicleList.get(i).vehiclePrice = vehicle_price;
+        System.out.println("vehicle Title Changed Successfully....");
+        System.out.println();
+    }
+    static void mod_count(int i) {
+        System.out.print("Enter New Kilometer :");
+        int vehicle_count = sc.nextInt();
+        vehicleList.get(i).vehicleTotalKM = vehicle_count;
+        System.out.println("vehicle Title Changed Successfully....");
+        System.out.println();
+    }
+    static void modifyVehicle() {
+        System.out.print("Enter the Vehicle ID to modify : ");
+        int mod_count = 0;
+        String temp_isbn = sc.nextLine();
+        for (int i = 0; i < vehicleList.size(); i++) {
+            if (vehicleList.get(i).vehicleID.equals(temp_isbn)) {
+                mod_count++;
+                int n6 = 0;
+                do {
+                    System.out.println("1.Modify Vehicle Name");
+                    System.out.println("2.Modify Vehicle Model");
+                    System.out.println("3.Modify Vehicle Rent Price");
+                    System.out.println("4.Modify Vehicle ID");
+                    System.out.println("5.Modify Vehicle Price");
+                    System.out.println("6.Modify Vehicle Total Kilometer");
+                    System.out.println("0.Exit");
+                    n6 = sc.nextInt();
+                    switch (n6) {
+                        case 0:
+                            System.out.println("All Changer Modified Successfully!");
+                            break;
+                        case 1:
+                            mod_tit(i);
+                            break;
+                        case 2:
+                            mod_auth(i);
+                            break;
+                        case 3:
+                            mod_type(i);
+                            break;
+                        case 4:
+                            mod_isbn(i);
+                            break;
+                        case 5:
+                            mod_price(i);
+                            break;
+                        case 6:
+                            mod_count(i);
+                            break;
+                        default:
+                            System.out.println("Invalid Number");
+                            break;
+                    }
+                } while (n6 != 0);
+            }
+        }
+        if (mod_count == 0) {
+            System.out.println("Incorrect ISBN or vehicle not Found....");
+        }
+    }
+//    ----------------------------------------------------------------------------------------------------------------------
+    static void viewVehicles() {
+        System.out.println("-----Vehicle List-----");
+        if (vehicleList.size() > 0) {
+            System.out.println(String.format("%-4s %-18s %-18s %-18s %-18s %-22s %-20s %-26s %-26s", "SNo", "Vehicle ID", "Vehicle Type", "Vehicle Name", "Vehicle Model", "vehicle Price", "Vehicle Rent Price", "Vehicle Total Kilometer", "Vehicle Trip Kilometer"));
+            for (int i = 0; i < vehicleList.size(); i++) {
+                int n = i;
+                if (vehicleList.get(i).vehicleType.equals("Car") && vehicleList.get(i).vehicleTripKM < 3000) {
+                    System.out.println(String.format("%-4s %-18s %-18s %-18s %-18s %-22s %-20s %-26s %-26s", (n + 1), vehicleList.get(i).vehicleID, vehicleList.get(i).vehicleType, vehicleList.get(i).vehicleName, vehicleList.get(i).vehicleModel, vehicleList.get(i).vehiclePrice, vehicleList.get(i).vehicleRentPrice, vehicleList.get(i).vehicleTotalKM, vehicleList.get(i).vehicleTripKM));
+                } else if (vehicleList.get(i).vehicleType.equals("Bike") && vehicleList.get(i).vehicleTripKM < 1500) {
+                    System.out.println(String.format("%-4s %-18s %-18s %-18s %-18s %-22s %-20s %-26s %-26s", (n + 1), vehicleList.get(i).vehicleID, vehicleList.get(i).vehicleType, vehicleList.get(i).vehicleName, vehicleList.get(i).vehicleModel, vehicleList.get(i).vehiclePrice, vehicleList.get(i).vehicleRentPrice, vehicleList.get(i).vehicleTotalKM, vehicleList.get(i).vehicleTripKM));
+                } else n--;
+            }
+        } else System.out.println("No vehicles Available!");
+        System.out.println();
+    }
+    static void viewUsers() {
+        System.out.println("-----User List-----");
+        if (userList.size() > 0) {
+            System.out.println(String.format("%-4s %-8s %-25s %-12s", "SNo", "User_ID", "User_Name", "Balance_Amount"));
+            for (int i = 0; i < userList.size(); i++) {
+                System.out.println(String.format("%-4s %-8s %-25s %-12s", (i + 1), userList.get(i).userID, userList.get(i).userName, userList.get(i).balance));
+            }
+        } else System.out.println("No vehicles Available!");
+        System.out.println();
+    }
+    static void adminSearchVehicle() {
+        int c = 0;
+        System.out.println("1.Car \t 2.Bike \nEnter Vehicle Type : ");
+        int t = sc.nextInt();
+        String type = "";
+        if (t == 1) type = "Car";
+        else if (t == 2) type = "Bile";
+        System.out.println("Enter Vehicle ID  : ");
+        sc.nextLine();
+        String n = sc.nextLine();
+        for (int i = 0; i < vehicleList.size(); i++) {
+            if (vehicleList.get(i).vehicleID.equals(n)) {
+                c++;
+                System.out.println(String.format("%-4s %-18s %-18s %-18s %-18s %-22s %-18s %-26s %-26s", "SNo", "Vehicle ID", "Vehicle Type", "Vehicle Name", "Vehicle Model", "vehicle Price", "Vehicle Rent Price", "Vehicle Total Kilometer", "Vehicle Trip Kilometer"));
+                if (t == 1 && vehicleList.get(i).vehicleTripKM < 3000) {
+                    System.out.println(String.format("%-4s %-18s %-18s %-18s %-18s %-22s %-18s %-26s %-26s", (i + 1), vehicleList.get(i).vehicleID, vehicleList.get(i).vehicleType, vehicleList.get(i).vehicleName, vehicleList.get(i).vehicleModel, vehicleList.get(i).vehiclePrice, vehicleList.get(i).vehicleRentPrice, vehicleList.get(i).vehicleTotalKM, vehicleList.get(i).vehicleTripKM));
+                } else if (t == 2 && vehicleList.get(i).vehicleTripKM < 1500) {
+                    System.out.println(String.format("%-4s %-18s %-18s %-18s %-18s %-22s %-18s %-26s %-26s", (i + 1), vehicleList.get(i).vehicleID, vehicleList.get(i).vehicleType, vehicleList.get(i).vehicleName, vehicleList.get(i).vehicleModel, vehicleList.get(i).vehiclePrice, vehicleList.get(i).vehicleRentPrice, vehicleList.get(i).vehicleTotalKM, vehicleList.get(i).vehicleTripKM));
+                }
+            }
+            if (c == 0) System.out.println("Invalid ID or Vehicle is Under Service!!!");
+            else System.out.println("These are the Results!");
+            System.out.println();
+        }
+    }
+
     private static void admin(){
         System.out.println("Admin Login Page");
-        System.out.println("Enter user name: ");
+        System.out.println("Enter admin name: ");
         sc.nextLine();
         String name1 = sc.nextLine();
         System.out.println("Enter password: ");
@@ -571,15 +565,17 @@ public class VehicleRentalSystem {
         }
     }
 
+    // Main Function-------------------------------------------------------
+
     public static void main(String[] args) {
         ArrayList<Borrow> his =new ArrayList<>();
-        user u = new user("a","1",35000,1,his);
+        user u = new user("user1","1",35000,1,his);
         userList.add(u);
         vehicle v = new vehicle("Car","c1","Polo",2015,15,500000,35680,0);
         vehicleList.add(v);
         int n=0;
         do{
-            System.out.println("-----LIBRARY MANAGEMENT SYSTEM-----");
+            System.out.println("-----VEHICLE RENTAL SYSTEM-----");
             System.out.println("1.Admin");
             System.out.println("2.New User");
             System.out.println("3.Existing User");
