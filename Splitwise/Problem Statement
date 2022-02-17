@@ -1,0 +1,39 @@
+Splitwise Application
+
+Design and Develop a Monolith Console based Splitwise Application by understanding various use cases.
+
+Tasks :
+1. Users should be able to create an account or Login to into the existing account by using Email ID and password .
+2. After successful login Users should be able to
+
+a.Add an Expense
+b. Update their Wallet Amount
+c. Create a group with their Contacts
+d.  Add friends into the Group
+e. Remove friends from the group
+f. View and pay their pending dues
+g. View their Transaction History
+h. Logout
+
+Type of Expense :
+1. Non-Group Expense
+2. Group Expense
+
+Non Group Expense :
+Users can add an expense by selecting a Partner for the Expense from their contacts.
+Expense amount can be Splitted equally among them or can be splitted unequally.
+
+Group Expense :
+Users can add a expense in a group where the amount gets shared among the group members equally.
+Payment :
+
+Users can view the details of the Expense Such as
+a. Name of the Expense
+b. Total Expense Amount
+c. Amount he/she need to pay
+d. Expense added by
+e. Date and Time of Expense
+
+While repaying the amount should be debited from the users wallet and should be credited to Expense adder’s Wallet.
+If the Expense adder is one of the Partner of Expense then his share should be auto debited from the account and the same should be added to his transaction history.
+
