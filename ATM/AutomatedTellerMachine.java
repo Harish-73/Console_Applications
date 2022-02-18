@@ -15,10 +15,10 @@ class UserDetail{
 class AutomatedTellerMachine {
 
     static Scanner sc=new Scanner(System.in);
-    static int[] noOfRs ={3,3,3,3};
+    static int[] noOfRs ={1,8,10,10};
     static int[]  rs = {2000,500,200,100};
     static int total=0;
-    static String adminName = "admin";
+    static String adminName = "a";
     static int adminPin = 1;
     static UserDetail u[]= new UserDetail[4];
     static int miniN,miniM=0;
@@ -75,6 +75,29 @@ class AutomatedTellerMachine {
         }
         return n;
     }
+    static int getMul(int i){
+        int max=i;
+            if (noOfRs[i] < noOfRs[i+1]) {
+                int n = noOfRs[i] * rs[i];
+                int t = n / rs[i+1];
+                if (t > noOfRs[i]) max++;
+            }
+            if(max==1){
+                if (noOfRs[max] < noOfRs[max+1]) {
+                    int n = noOfRs[max] * rs[max];
+                    int t = n / rs[max+1];
+                    if (t > noOfRs[max]) max++;
+                }
+            }
+        if(max==2){
+            if (noOfRs[max] < noOfRs[max+1]) {
+                int n = noOfRs[max] * rs[max];
+                int t = n / rs[max+1];
+                if (t > noOfRs[max]) max++;
+            }
+        }
+        return max;
+    }
     static void withAmount() {
         System.out.println();
         System.out.print("Enter Amount to Withdraw : ");
@@ -85,6 +108,9 @@ class AutomatedTellerMachine {
                 int noOfNote[] = {0, 0, 0, 0};
                 int t = n,c=0;
                 for (int i = 0; i < 4; i++) {
+                    if(i<3){
+                        i=getMul(i);
+                    }
                     while (noOfRs[i] > 0 && n >= rs[i]) {
                         n -= rs[i];
                         noOfRs[i]--;
@@ -208,11 +234,10 @@ class AutomatedTellerMachine {
             System.out.println(u[i].userID);
         }
         */
-        u[0] = new UserDetail("user1",1,52300,"u1");
-        u[1] = new UserDetail("user2",1,72300,"u2");
-        u[2] = new UserDetail("user3",1,62300,"u3");
-        u[3] = new UserDetail("user4",1,42300,"u4");
-        try {
+        u[0] = new UserDetail("u1",1,52300,"u1");
+        u[1] = new UserDetail("u2",1,72300,"u2");
+        u[2] = new UserDetail("u3",1,62300,"u3");
+        u[3] = new UserDetail("u4",1,42300,"u4");
             int n = 0;
             do {
                 System.out.println("-----ATM APPLICATION LOGIN-----");
@@ -278,11 +303,11 @@ class AutomatedTellerMachine {
                             }
                             break;
                         }catch(Exception e) {
-                            System.out.println("Please Enter a Invalid Number");
+                            System.out.println("Please Enter a valid Number");
                         }
                     case 2:
 
-                        try {
+
                             System.out.print("\033[H\033[2J");
                             System.out.flush();
                             System.out.println();
@@ -360,9 +385,7 @@ class AutomatedTellerMachine {
                                 System.out.println();
                             }
                             break;
-                        }catch(Exception e) {
-                            System.out.println("Please Enter a Invalid Number");
-                        }
+
                     case 3:
                         System.out.print("\033[H\033[2J");
                         System.out.flush();
@@ -377,10 +400,7 @@ class AutomatedTellerMachine {
                         break;
                 }
             } while (n != 3);
-        }catch (Exception e){
-            System.out.println("Please Enter a Invalid Number");
-        }
+
         System.out.println("Thanks for Using");
     }
 }
-
