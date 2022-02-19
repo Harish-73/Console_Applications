@@ -1,5 +1,3 @@
-package ZOHO.Split;
-
 import java.util.*;
 import java.lang.*;
 class User{
@@ -260,14 +258,14 @@ public class SplitDemo{
         User u1 = new User();
         User u2 = new User();
         User u3 = new User();
-        u1.name = "a";
+        u1.name = "user1";
         u1.pin ="1";
         u1.wallet = 1000;
-        u2.name = "b";
+        u2.name = "user2";
         u2.pin ="1";
         u2.wallet = 1000;
-        u3.name = "kanish";
-        u3.pin ="8888";
+        u3.name = "user3";
+        u3.pin ="1";
         u3.wallet = 1000;
         users.add(u1);
         users.add(u2);
