@@ -68,15 +68,16 @@ _Login Details_
 |Admin|admin|1|
 |User ID|1|1|
 
+***
 
-
-<!-- ## 6. Splitwise Application
+## 6. Splitwise Application
 
 _Login Details_
 |Type|User Name|Password|
 |---|---|---|
-|User|user1@gmail.com|123|
-|User|user2@gmail.com|123| -->
+|User|user1|1|
+|User|user2|1|
+|User|user3|1|
 
 
 
