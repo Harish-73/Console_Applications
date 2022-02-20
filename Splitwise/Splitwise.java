@@ -27,7 +27,7 @@ class Group{
     ArrayList<User> groupmembers = new ArrayList<>();
     ArrayList<GroupExpense> groupexpenses = new ArrayList<>();
 }
-public class SplitDemo{
+public class Splitwise{
     public static User createuser(){
         Scanner sc = new Scanner(System.in);
         User u = new User();
