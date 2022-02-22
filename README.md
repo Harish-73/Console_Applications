@@ -10,8 +10,8 @@
 2. <b><a href="https://github.com/Harish-73/Console_Applications/blob/main/Shopping%20Application/ShoppingApplication.java">Shoping Application</a><b>
 3. <b><a href="https://github.com/Harish-73/Console_Applications/blob/main/Railway%20Reservation/RailwayReservation.java">Railway Application</a><b>
 4. <b><a href="https://github.com/Harish-73/Console_Applications/blob/main/Library%20Management%20System/LibraryManagementSystem.java">Library management System</a><b>
-<!-- 5. <b><a href="https://github.com/Harish-73/Console_Applications/blob/main/Splitwise/Splitwise.java">Splitwise Application</a><b>  -->
-5. <b><a href="https://github.com/Harish-73/Console_Applications/blob/main/Vehicle%20Rental%20System/VehicleRentalSystem.java">Vehicle Rental System</a><b> 
+5. <b><a href="https://github.com/Harish-73/Console_Applications/blob/main/Splitwise/Splitwise.java">Splitwise Application</a><b> 
+6. <b><a href="https://github.com/Harish-73/Console_Applications/blob/main/Vehicle%20Rental%20System/VehicleRentalSystem.java">Vehicle Rental System</a><b> 
 
  <br>
 
@@ -61,7 +61,7 @@ _Login Details_
 
 ***
  
-<!-- ## 5. Splitwise Application
+## 5. Splitwise Application
 
 _Login Details_
 |Type|User Name|Password|
@@ -70,9 +70,9 @@ _Login Details_
 |User|user2|1|
 |User|user3|1| 
  
-***  -->
+*** 
 
-## 5. Vehicle Rental System
+## 6. Vehicle Rental System
 
 _Login Details_
 |Type|User Name|Password|
